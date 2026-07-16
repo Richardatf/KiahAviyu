@@ -10,6 +10,7 @@ test("identity and routes are centralized", async () => {
   ]);
   const source = content + site;
   assert.match(content, /קיה אביעו/);
+  assert.doesNotMatch(content, /קיה אביו/);
   for (const route of [
     "/books",
     "/series",
@@ -32,6 +33,7 @@ test("forbidden placeholders and artifacts are absent", async () => {
     "app/[...path]/page.tsx",
     "components/site.tsx",
     "lib/content.ts",
+    "lib/books.ts",
   ];
   for (const f of files) {
     const text = await read(f);
@@ -42,7 +44,7 @@ test("forbidden placeholders and artifacts are absent", async () => {
   }
 });
 test("owner-verified Amazon products use direct links", async () => {
-  const content = await read("lib/content.ts");
+  const content = await read("lib/books.ts");
   for (const product of [
     "Tower-Daat-Kiah-Aviyu/dp/033692142X",
     "MERKAVAT-HAEL-CHARIOT-DIVINE-AVIYU/dp/B0GPW2KX2T",
@@ -59,7 +61,7 @@ test("owner-verified Amazon products use direct links", async () => {
 });
 
 test("verified products use local official cover files", async () => {
-  const content = await read("lib/content.ts");
+  const content = await read("lib/books.ts");
   for (const slug of [
     "merkavat-hael",
     "tower-of-daat",
@@ -89,13 +91,14 @@ test("approved and generated brand artwork is project-local", async () => {
 });
 
 test("unpublished catalog and publisher inquiry content are absent", async () => {
-  const [content, page, shell, sitemap] = await Promise.all([
+  const [content, books, page, shell, sitemap] = await Promise.all([
     read("lib/content.ts"),
+    read("lib/books.ts"),
     read("app/[...path]/page.tsx"),
     read("components/site.tsx"),
     read("app/sitemap.ts"),
   ]);
-  const source = content + page + shell + sitemap;
+  const source = content + books + page + shell + sitemap;
   assert.doesNotMatch(
     source,
     /In Development|Coming Soon|publisher-inquiries/i,
@@ -107,6 +110,23 @@ test("unpublished catalog and publisher inquiry content are absent", async () =>
     "forgotten-star-saga",
     "cube-of-the-scribe",
   ]) {
-    assert.doesNotMatch(content, new RegExp(`slug: "${slug}"`));
+    assert.doesNotMatch(books, new RegExp(`slug: "${slug}"`));
   }
+});
+
+test("book facts have one verified source of truth", async () => {
+  const [content, books, shell] = await Promise.all([
+    read("lib/content.ts"),
+    read("lib/books.ts"),
+    read("components/site.tsx"),
+  ]);
+  assert.match(content, /export \{ books, findBook \} from "\.\/books"/);
+  assert.doesNotMatch(content, /title: "MERKAVAT/);
+  assert.match(books, /Thanking HaShem for the One Who Tries Us/);
+  assert.doesNotMatch(books + shell, /Through the Tries|When He Tries You/);
+  assert.match(books, /isbn: "033692142X"/);
+  assert.doesNotMatch(books, /978-1-969659-10-2/);
+  assert.match(books, /publicationStatus: "published"/);
+  assert.match(books, /verification: verified/);
+  assert.match(shell, /width=\{book\.coverWidth\}/);
 });

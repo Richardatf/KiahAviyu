@@ -130,8 +130,8 @@ export function BookCover({ book }: { book: Book }) {
         <Image
           src={book.coverImage}
           alt={`${book.title}${book.subtitle ? `: ${book.subtitle}` : ""} book cover`}
-          width={334}
-          height={500}
+          width={book.coverWidth}
+          height={book.coverHeight}
           unoptimized
         />
       </div>
