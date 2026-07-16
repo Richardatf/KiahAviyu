@@ -11,7 +11,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "news",
     "press",
     "contact",
-    "publisher-inquiries",
     "privacy",
     "terms",
     "search",

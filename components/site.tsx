@@ -31,9 +31,6 @@ export function Header() {
           <Link className="search-link" href="/search" aria-label="Search">
             ⌕
           </Link>
-          <Link className="inquiry-link" href="/publisher-inquiries">
-            Publisher inquiries
-          </Link>
         </div>
         <details className="mobile-menu">
           <summary aria-label="Open navigation">Menu</summary>
@@ -43,7 +40,6 @@ export function Header() {
                 {label}
               </Link>
             ))}
-            <Link href="/publisher-inquiries">Publisher inquiries</Link>
           </nav>
         </details>
       </div>
@@ -72,7 +68,6 @@ export function Footer() {
           <h2>Information</h2>
           <Link href="/press">Press</Link>
           <Link href="/contact">Contact</Link>
-          <Link href="/publisher-inquiries">Publisher inquiries</Link>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
         </div>
@@ -226,9 +221,7 @@ export function FormBlock({ kind, title }: { kind: string; title: string }) {
             <option value="">Choose a topic</option>
             <option>General inquiry</option>
             <option>Press or interview</option>
-            <option>Rights and licensing</option>
-            <option>ARC or reviewer request</option>
-            <option>Bulk or institutional order</option>
+            <option>Reader message</option>
           </select>
         </label>
         <label>

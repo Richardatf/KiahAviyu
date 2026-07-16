@@ -43,7 +43,6 @@ const titleFor = (path: string[]) =>
             news: "News",
             press: "Press",
             contact: "Contact",
-            "publisher-inquiries": "Publisher inquiries",
             privacy: "Privacy",
             terms: "Terms",
             search: "Search",
@@ -154,22 +153,20 @@ export default async function RoutePage({ params, searchParams }: Props) {
   if (root === "books" && !slug) {
     const term = String(query.q ?? "").toLowerCase();
     const cat = String(query.category ?? "");
-    const status = String(query.status ?? "");
     const filtered = books.filter(
       (b) =>
         (!term ||
           `${b.title} ${b.subtitle ?? ""} ${b.short}`
             .toLowerCase()
             .includes(term)) &&
-        (!cat || b.category === cat) &&
-        (!status || b.status === status),
+        (!cat || b.category === cat),
     );
     return (
       <Shell>
         <PageHero
           kicker="The catalog"
           title="Books as gates."
-          intro="Browse the published and developing works of Kiah Aviyu. Unconfirmed publication details are intentionally omitted."
+          intro="Browse the published books of Kiah Aviyu."
         />
         <form className="filters" action="/books">
           <label>
@@ -185,15 +182,6 @@ export default async function RoutePage({ params, searchParams }: Props) {
             <select name="category" defaultValue={cat}>
               <option value="">All categories</option>
               {[...new Set(books.map((b) => b.category))].map((x) => (
-                <option key={x}>{x}</option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Status
-            <select name="status" defaultValue={status}>
-              <option value="">All statuses</option>
-              {[...new Set(books.map((b) => b.status))].map((x) => (
                 <option key={x}>{x}</option>
               ))}
             </select>
@@ -487,38 +475,9 @@ export default async function RoutePage({ params, searchParams }: Props) {
         <PageHero
           kicker="Contact"
           title="Begin a conversation."
-          intro="General, press, review, and rights inquiries can begin here."
+          intro="General, press, and reader messages can begin here."
         />
         <FormBlock kind="contact" title="Contact Kiah Aviyu" />
-      </Shell>
-    );
-  if (root === "publisher-inquiries")
-    return (
-      <Shell>
-        <PageHero
-          kicker="Professional inquiries"
-          title="Publishers, rights & adaptations"
-          intro="A professional path for manuscript, translation, adaptation, speaking, interview, bulk, and institutional inquiries."
-        />
-        <section className="inquiry-overview section-pad">
-          <div>
-            <h2>Areas of work</h2>
-            <p>
-              Mystical nonfiction, speculative fiction, connected series, Hebrew
-              symbolism, literary world-building, curriculum-adjacent projects,
-              and related public conversations.
-            </p>
-          </div>
-          <ul>
-            <li>Manuscript inquiries</li>
-            <li>Rights and licensing</li>
-            <li>Translation rights</li>
-            <li>Film, television, game, and adaptation inquiries</li>
-            <li>Speaking and interviews</li>
-            <li>Bulk and institutional orders</li>
-          </ul>
-        </section>
-        <FormBlock kind="publisher" title="Publisher inquiry" />
       </Shell>
     );
   if (root === "privacy")

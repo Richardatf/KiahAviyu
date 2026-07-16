@@ -1,4 +1,4 @@
-export type BookStatus = "Available" | "Coming Soon" | "In Development";
+export type BookStatus = "Available";
 export type Book = {
   title: string;
   subtitle?: string;
@@ -72,7 +72,7 @@ export const books: Book[] = [
     retailer: "https://www.amazon.com/ADAM-KADMON-KIAH-AVIYU/dp/196965953X",
     coverImage: "/covers/adam-kadmon.jpg",
     coverStyle: "ten-lights",
-    seo: "ADAM KADMON — A Story in Ten Lights, a developing work by Kiah Aviyu.",
+    seo: "ADAM KADMON — A Story in Ten Lights by Kiah Aviyu.",
   },
   {
     title: "THE ADVERSARY’S PRAYER",
@@ -90,17 +90,6 @@ export const books: Book[] = [
     seo: "THE ADVERSARY’S PRAYER by Kiah Aviyu.",
   },
   {
-    title: "EHEYEH",
-    subtitle: "Mysteries of Alef",
-    slug: "eheyeh",
-    category: "Mystical Nonfiction",
-    status: "In Development",
-    short: "An exploration in the architecture of Hebrew letters.",
-    long: "A developing entry in the Living Library, centered on Alef and the interpretive spaces opened by Hebrew language.",
-    coverStyle: "alef",
-    seo: "EHEYEH: Mysteries of Alef, a developing work by Kiah Aviyu.",
-  },
-  {
     title: "DO YOU HEAR VOICES?",
     slug: "do-you-hear-voices",
     category: "Fiction & Myth",
@@ -110,7 +99,7 @@ export const books: Book[] = [
     retailer: "https://www.amazon.com/You-Hear-Voices-Kiah-Aviyu/dp/B0H7LB9KGP",
     coverImage: "/covers/do-you-hear-voices.jpg",
     coverStyle: "voices",
-    seo: "DO YOU HEAR VOICES?, a developing work by Kiah Aviyu.",
+    seo: "DO YOU HEAR VOICES? by Kiah Aviyu.",
   },
   {
     title: "THE GOD THAT ATE GRASS",
@@ -123,18 +112,7 @@ export const books: Book[] = [
     retailer: "https://www.amazon.com/God-That-Ate-Grass/dp/B0H6VW4QS4",
     coverImage: "/covers/the-god-that-ate-grass.jpg",
     coverStyle: "grass",
-    seo: "THE GOD THAT ATE GRASS, a developing work by Kiah Aviyu.",
-  },
-  {
-    title: "KABBALIST OF THE CODE",
-    slug: "kabbalist-of-the-code",
-    series: "Quantum Etz Chaim",
-    category: "Fiction & Myth",
-    status: "In Development",
-    short: "A speculative work connecting code, symbol, and meaning.",
-    long: "A developing project in the orbit of Quantum Etz Chaim. Further details will be added when confirmed.",
-    coverStyle: "code",
-    seo: "KABBALIST OF THE CODE, a developing work by Kiah Aviyu.",
+    seo: "THE GOD THAT ATE GRASS by Kiah Aviyu.",
   },
   {
     title: "QUANTUM ETZ CHAIM",
@@ -174,38 +152,6 @@ export const books: Book[] = [
     coverStyle: "tiferet",
     seo: "TIFERET by Kiah Aviyu.",
   },
-  {
-    title: "BENEATH EDEN",
-    slug: "beneath-eden",
-    category: "Fiction & Myth",
-    status: "In Development",
-    short: "A developing work of speculative fiction.",
-    long: "A work in development. Its full premise and publication details have not yet been announced.",
-    coverStyle: "eden",
-    seo: "BENEATH EDEN, a developing work by Kiah Aviyu.",
-  },
-  {
-    title: "THE FORGOTTEN STAR SAGA",
-    slug: "forgotten-star-saga",
-    series: "The Forgotten Star Saga",
-    sequence: 1,
-    category: "Fiction & Myth",
-    status: "In Development",
-    short: "The threshold of a developing speculative saga.",
-    long: "A connected fictional world in development. Reading order and release details will appear here when confirmed.",
-    coverStyle: "star",
-    seo: "THE FORGOTTEN STAR SAGA, a developing series by Kiah Aviyu.",
-  },
-  {
-    title: "THE CUBE OF THE SCRIBE",
-    slug: "cube-of-the-scribe",
-    category: "Fiction & Myth",
-    status: "In Development",
-    short: "A developing entry in the Living Library.",
-    long: "A work in development within the conceptual architecture of the Celestial Library of the 231 Gates.",
-    coverStyle: "cube",
-    seo: "THE CUBE OF THE SCRIBE, a developing work by Kiah Aviyu.",
-  },
 ];
 
 export const series = [
@@ -222,21 +168,10 @@ export const series = [
       "A separate story world connected to the wider body of Kiah Aviyu’s work.",
   },
   {
-    slug: "forgotten-star",
-    title: "The Forgotten Star Saga",
-    short: "A speculative saga in development.",
-  },
-  {
     slug: "quantum-etz-chaim",
     title: "Quantum Etz Chaim",
     short:
       "A related world exploring tree, pattern, code, and interpretive structure.",
-  },
-  {
-    slug: "mystical-nonfiction",
-    title: "Standalone Mystical Nonfiction",
-    short:
-      "Works of contemplative inquiry that stand independently while echoing across the library.",
   },
 ];
 

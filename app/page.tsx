@@ -131,15 +131,15 @@ export default function Home() {
             ],
             [
               "02",
-              "Mystical Nonfiction",
-              "Contemplative works concerned with language, trial, and meaning.",
-              "/books?category=Mystical+Nonfiction",
+              "Series & Worlds",
+              "Explore the connected architectures that unfold across books.",
+              "/series",
             ],
             [
               "03",
-              "Series, Gates & Trees",
-              "Connected architectures that unfold across books and projects.",
-              "/series",
+              "Connected Projects",
+              "Visit the research, educational, and creative work beyond the books.",
+              "/projects",
             ],
           ].map(([n, t, d, u]) => (
             <Link className="journey-card" href={u} key={t}>

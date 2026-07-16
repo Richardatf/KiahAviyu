@@ -19,7 +19,6 @@ test("identity and routes are centralized", async () => {
     "/news",
     "/press",
     "/contact",
-    "/publisher-inquiries",
     "/privacy",
     "/terms",
     "/search",
@@ -42,22 +41,6 @@ test("forbidden placeholders and artifacts are absent", async () => {
     );
   }
 });
-test("unverified books do not contain retailer or ISBN metadata", async () => {
-  const content = await read("lib/content.ts");
-  for (const slug of [
-    "eheyeh",
-    "kabbalist-of-the-code",
-    "beneath-eden",
-    "forgotten-star-saga",
-    "cube-of-the-scribe",
-  ]) {
-    const start = content.indexOf(`slug:"${slug}"`);
-    const end = content.indexOf("},", start);
-    const record = content.slice(start, end);
-    assert.doesNotMatch(record, /retailer:|isbn:/i);
-  }
-});
-
 test("owner-verified Amazon products use direct links", async () => {
   const content = await read("lib/content.ts");
   for (const product of [
@@ -105,22 +88,25 @@ test("approved and generated brand artwork is project-local", async () => {
   }
 });
 
-test("catalog classifications match the author's taxonomy", async () => {
-  const content = await read("lib/content.ts");
-  assert.equal(
-    [...content.matchAll(/category: "Mystical Nonfiction"/g)].length,
-    1,
+test("unpublished catalog and publisher inquiry content are absent", async () => {
+  const [content, page, shell, sitemap] = await Promise.all([
+    read("lib/content.ts"),
+    read("app/[...path]/page.tsx"),
+    read("components/site.tsx"),
+    read("app/sitemap.ts"),
+  ]);
+  const source = content + page + shell + sitemap;
+  assert.doesNotMatch(
+    source,
+    /In Development|Coming Soon|publisher-inquiries/i,
   );
-  const eheyeh = content.slice(
-    content.indexOf('title: "EHEYEH"'),
-    content.indexOf("},", content.indexOf('title: "EHEYEH"')),
-  );
-  assert.match(eheyeh, /category: "Mystical Nonfiction"/);
-  assert.doesNotMatch(eheyeh, /series:/);
-
-  const cube = content.slice(
-    content.indexOf('title: "THE CUBE OF THE SCRIBE"'),
-    content.indexOf("},", content.indexOf('title: "THE CUBE OF THE SCRIBE"')),
-  );
-  assert.doesNotMatch(cube, /series:/);
+  for (const slug of [
+    "eheyeh",
+    "kabbalist-of-the-code",
+    "beneath-eden",
+    "forgotten-star-saga",
+    "cube-of-the-scribe",
+  ]) {
+    assert.doesNotMatch(content, new RegExp(`slug: "${slug}"`));
+  }
 });

@@ -13,7 +13,6 @@ const routes = [
   "/news/living-library-rebuild",
   "/press",
   "/contact",
-  "/publisher-inquiries",
   "/privacy",
   "/terms",
   "/search?q=Alef",
