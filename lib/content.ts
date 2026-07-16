@@ -31,7 +31,7 @@ export const books: Book[] = [
     title: "MERKAVAT HA’EL",
     subtitle: "The Chariot of the Divine",
     slug: "merkavat-hael",
-    category: "Mystical Nonfiction",
+    category: "Fiction & Myth",
     status: "Available",
     short:
       "A central work in Kiah Aviyu’s growing library of mystical inquiry.",
@@ -46,7 +46,7 @@ export const books: Book[] = [
   {
     title: "TOWER OF DA’AT",
     slug: "tower-of-daat",
-    category: "Mystical Nonfiction",
+    category: "Fiction & Myth",
     status: "Available",
     short:
       "A meditation on knowledge, wisdom, and the climb toward understanding.",
@@ -78,7 +78,7 @@ export const books: Book[] = [
     title: "THE ADVERSARY’S PRAYER",
     subtitle: "Thanking HaShem When He Tries You",
     slug: "the-adversarys-prayer",
-    category: "Mystical Nonfiction",
+    category: "Fiction & Myth",
     status: "Available",
     short:
       "A reflection on trial, gratitude, and the difficult work of prayer.",
@@ -93,8 +93,7 @@ export const books: Book[] = [
     title: "EHEYEH",
     subtitle: "Mysteries of Alef",
     slug: "eheyeh",
-    series: "Celestial Library of the 231 Gates",
-    category: "Series, Gates & Trees",
+    category: "Mystical Nonfiction",
     status: "In Development",
     short: "An exploration in the architecture of Hebrew letters.",
     long: "A developing entry in the Living Library, centered on Alef and the interpretive spaces opened by Hebrew language.",
@@ -104,7 +103,7 @@ export const books: Book[] = [
   {
     title: "DO YOU HEAR VOICES?",
     slug: "do-you-hear-voices",
-    category: "Mystical Nonfiction",
+    category: "Fiction & Myth",
     status: "Available",
     short: "An inquiry into voice, interpretation, and discernment.",
     long: "A published exploration of voice, interpretation, and discernment. Additional descriptive details will be added when confirmed.",
@@ -141,7 +140,7 @@ export const books: Book[] = [
     title: "QUANTUM ETZ CHAIM",
     slug: "quantum-etz-chaim",
     series: "Quantum Etz Chaim",
-    category: "Mystical Nonfiction",
+    category: "Fiction & Myth",
     status: "Available",
     short: "The Tree of Life considered as quantum architecture.",
     long: "A work connecting the architecture of the Tree of Life with questions of physics, computation, consciousness, and information.",
@@ -154,7 +153,7 @@ export const books: Book[] = [
   {
     title: "INFINITE WAVE",
     slug: "infinite-wave",
-    category: "Mystical Nonfiction",
+    category: "Fiction & Myth",
     status: "Available",
     short: "A published work in Kiah Aviyu’s expanding literary library.",
     long: "INFINITE WAVE is part of Kiah Aviyu’s growing body of published work. Additional descriptive details will be added when confirmed.",
@@ -166,7 +165,7 @@ export const books: Book[] = [
   {
     title: "TIFERET",
     slug: "tiferet",
-    category: "Mystical Nonfiction",
+    category: "Fiction & Myth",
     status: "Available",
     short: "A published work in Kiah Aviyu’s expanding literary library.",
     long: "TIFERET is part of Kiah Aviyu’s growing body of published work. Additional descriptive details will be added when confirmed.",
@@ -200,8 +199,7 @@ export const books: Book[] = [
   {
     title: "THE CUBE OF THE SCRIBE",
     slug: "cube-of-the-scribe",
-    series: "Celestial Library of the 231 Gates",
-    category: "Series, Gates & Trees",
+    category: "Fiction & Myth",
     status: "In Development",
     short: "A developing entry in the Living Library.",
     long: "A work in development within the conceptual architecture of the Celestial Library of the 231 Gates.",

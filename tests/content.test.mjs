@@ -104,3 +104,23 @@ test("approved and generated brand artwork is project-local", async () => {
     await access(new URL(`../public/brand/${file}`, import.meta.url));
   }
 });
+
+test("catalog classifications match the author's taxonomy", async () => {
+  const content = await read("lib/content.ts");
+  assert.equal(
+    [...content.matchAll(/category: "Mystical Nonfiction"/g)].length,
+    1,
+  );
+  const eheyeh = content.slice(
+    content.indexOf('title: "EHEYEH"'),
+    content.indexOf("},", content.indexOf('title: "EHEYEH"')),
+  );
+  assert.match(eheyeh, /category: "Mystical Nonfiction"/);
+  assert.doesNotMatch(eheyeh, /series:/);
+
+  const cube = content.slice(
+    content.indexOf('title: "THE CUBE OF THE SCRIBE"'),
+    content.indexOf("},", content.indexOf('title: "THE CUBE OF THE SCRIBE"')),
+  );
+  assert.doesNotMatch(cube, /series:/);
+});
