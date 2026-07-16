@@ -1,5 +1,7 @@
 const amazonUrl =
   "https://www.amazon.com/s?k=kiah+aviyu&crid=3J571DNG4UE31&sprefix=%2Caps%2C345&ref=nb_sb_ss_recent_2_0_recent";
+const merkavatUrl = "https://www.amazon.com/s?k=Merkavat+Ha%27El+Kiah+Aviyu";
+const towerUrl = "https://www.amazon.com/s?k=Tower+of+Da%27at+Kiah+Aviyu";
 
 const Arrow = () => <span aria-hidden="true">↗</span>;
 
@@ -33,8 +35,8 @@ export default function Home() {
           <em>inner ascent.</em>
         </h1>
         <p className="hero-copy">
-          Spiritual writing for those who refuse easy answers—books about wisdom,
-          adversity, and the sacred work of becoming.
+          Enter the visionary worlds of <em>Merkavat Ha’El</em> and <em>Tower of
+          Da’at</em>—the defining works of Kiah Aviyu.
         </p>
         <div className="hero-actions">
           <a className="button button-light" href="#books">Explore the books <span>↓</span></a>
@@ -61,44 +63,44 @@ export default function Home() {
         <div className="section-heading">
           <div>
             <p className="section-number">02 / The books</p>
-            <h2>Begin the journey.</h2>
+            <h2>The essential works.</h2>
           </div>
           <a className="text-link dark-link" href={amazonUrl} target="_blank" rel="noreferrer">
             View all on Amazon <Arrow />
           </a>
         </div>
 
-        <article className="book-row">
+        <article className="book-row flagship">
+          <div className="book-art prayer-cover merkavat-cover" aria-label="Stylized cover for Merkavat Ha’El">
+            <span className="prayer-ring" />
+            <p>MERKAVAT<br /><strong>HA’EL</strong></p>
+            <div className="cover-rule" />
+            <small>THE CHARIOT<br />OF THE DIVINE</small>
+            <b>KIAH AVIYU</b>
+          </div>
+          <div className="book-info">
+            <p className="book-index">THE BEST OF KIAH AVIYU · FEATURED</p>
+            <h3>Merkavat Ha’El</h3>
+            <p className="book-theme">The Chariot of the Divine.</p>
+            <p className="book-meta">A flagship work by Kiah Aviyu</p>
+            <a className="button button-dark" href={merkavatUrl} target="_blank" rel="noreferrer">
+              Find on Amazon <Arrow />
+            </a>
+          </div>
+        </article>
+
+        <article className="book-row reverse flagship">
           <div className="book-art tower-cover" aria-label="Stylized cover for Tower of Da’at">
             <div className="cover-sun" />
             <p>TOWER<br />OF<br /><strong>DA’AT</strong></p>
             <small>KIAH AVIYU</small>
           </div>
           <div className="book-info">
-            <p className="book-index">BOOK I · 2025</p>
+            <p className="book-index">THE BEST OF KIAH AVIYU · FEATURED</p>
             <h3>Tower of Da’at</h3>
             <p className="book-theme">A meditation on knowledge, wisdom, and the climb toward understanding.</p>
             <p className="book-meta">Paperback · ISBN 978-1-969659-10-2</p>
-            <a className="button button-dark" href={amazonUrl} target="_blank" rel="noreferrer">
-              Find on Amazon <Arrow />
-            </a>
-          </div>
-        </article>
-
-        <article className="book-row reverse">
-          <div className="book-art prayer-cover" aria-label="Stylized cover for The Adversary’s Prayer">
-            <span className="prayer-ring" />
-            <p>THE<br /><strong>ADVERSARY’S</strong><br />PRAYER</p>
-            <div className="cover-rule" />
-            <small>THANKING HASHEM FOR<br />THE ONE WHO TRIES US</small>
-            <b>KIAH AVIYU</b>
-          </div>
-          <div className="book-info">
-            <p className="book-index">BOOK II · 2025</p>
-            <h3>The Adversary’s Prayer</h3>
-            <p className="book-theme">Thanking Hashem for the one who tries us.</p>
-            <p className="book-meta">Paperback · ISBN 978-1-969659-45-4</p>
-            <a className="button button-dark" href={amazonUrl} target="_blank" rel="noreferrer">
+            <a className="button button-dark" href={towerUrl} target="_blank" rel="noreferrer">
               Find on Amazon <Arrow />
             </a>
           </div>

@@ -3,11 +3,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Kiah Aviyu — Author",
-  description: "Spiritual writing on wisdom, adversity, and the sacred work of becoming. Discover the books of Kiah Aviyu.",
+  description: "Discover Merkavat Ha’El and Tower of Da’at—the essential works of Kiah Aviyu.",
   metadataBase: new URL("https://kiahaviyu.com"),
   openGraph: {
     title: "Kiah Aviyu — Words for the inner ascent",
-    description: "Books about wisdom, adversity, and the sacred work of becoming.",
+    description: "Featuring Merkavat Ha’El and Tower of Da’at—the essential works of Kiah Aviyu.",
     url: "https://kiahaviyu.com",
     siteName: "Kiah Aviyu",
     type: "website",
