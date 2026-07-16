@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 const root = new URL("../", import.meta.url);
 const read = (p) => readFile(new URL(p, root), "utf8");
@@ -72,5 +72,23 @@ test("owner-verified Amazon products use direct links", async () => {
     "TIFERET-Kiah-Aviyu/dp/1969659394",
   ]) {
     assert.match(content, new RegExp(product));
+  }
+});
+
+test("verified products use local official cover files", async () => {
+  const content = await read("lib/content.ts");
+  for (const slug of [
+    "merkavat-hael",
+    "tower-of-daat",
+    "the-adversarys-prayer",
+    "quantum-etz-chaim",
+    "the-god-that-ate-grass",
+    "do-you-hear-voices",
+    "adam-kadmon",
+    "infinite-wave",
+    "tiferet",
+  ]) {
+    assert.match(content, new RegExp(`coverImage: "/covers/${slug}\\.jpg"`));
+    await access(new URL(`../public/covers/${slug}.jpg`, import.meta.url));
   }
 });

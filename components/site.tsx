@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { nav, site, type Book } from "../lib/content";
 
 export function HebrewName({ className = "" }: { className?: string }) {
@@ -128,6 +129,19 @@ export function Breadcrumbs({ items }: { items: Array<[string, string?]> }) {
   );
 }
 export function BookCover({ book }: { book: Book }) {
+  if (book.coverImage) {
+    return (
+      <div className="book-cover official-cover">
+        <Image
+          src={book.coverImage}
+          alt={`${book.title}${book.subtitle ? `: ${book.subtitle}` : ""} book cover`}
+          width={334}
+          height={500}
+          unoptimized
+        />
+      </div>
+    );
+  }
   return (
     <div
       className={`book-cover cover-${book.coverStyle}`}
