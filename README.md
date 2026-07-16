@@ -28,3 +28,9 @@ Do not create custom password storage. A future portal should use a mature ident
 ## Deployment
 
 `.openai/hosting.json` binds this repository to the existing Sites project. Production metadata and canonical URLs use `https://kiahaviyu.com`. Optional integration values belong in the hosting environment; `.env.example` contains no secrets.
+
+### Netlify
+
+`netlify.toml` overrides dashboard build settings so the repository root is never used as the publish directory. Netlify publishes the static client bundle from `dist/client` and packages `netlify/functions/site.mjs` as the SSR entry point. The automatic Netlify Next.js runtime is skipped because this project uses vinext’s Worker output rather than a `.next` bundle.
+
+If the Next.js runtime was manually added in the Netlify dashboard, remove or disable it under **Project configuration → Build & deploy → Runtime**. Repository configuration supplies `NETLIFY_NEXT_PLUGIN_SKIP=true`, but removing the unused UI plugin keeps the project settings unambiguous.
