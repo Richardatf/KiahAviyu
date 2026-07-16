@@ -1,0 +1,62 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import test from "node:test";
+const root = new URL("../", import.meta.url);
+const read = (p) => readFile(new URL(p, root), "utf8");
+test("identity and routes are centralized", async () => {
+  const [content, site] = await Promise.all([
+    read("lib/content.ts"),
+    read("components/site.tsx"),
+  ]);
+  const source = content + site;
+  assert.match(content, /קיה אביעו/);
+  for (const route of [
+    "/books",
+    "/series",
+    "/231-gates",
+    "/projects",
+    "/about",
+    "/news",
+    "/press",
+    "/contact",
+    "/publisher-inquiries",
+    "/privacy",
+    "/terms",
+    "/search",
+  ])
+    assert.match(source, new RegExp(route.replace("/", "\\/")));
+  assert.match(site, /lang="he" dir="rtl"/);
+});
+test("forbidden placeholders and artifacts are absent", async () => {
+  const files = [
+    "app/page.tsx",
+    "app/[...path]/page.tsx",
+    "components/site.tsx",
+    "lib/content.ts",
+  ];
+  for (const f of files) {
+    const text = await read(f);
+    assert.doesNotMatch(
+      text,
+      /contentReference|Lorem ipsum|Paste announcements|Phase 2|Optional later|TODO/i,
+    );
+  }
+});
+test("unverified books do not contain retailer or ISBN metadata", async () => {
+  const content = await read("lib/content.ts");
+  for (const slug of [
+    "adam-kadmon",
+    "eheyeh",
+    "do-you-hear-voices",
+    "the-god-that-ate-grass",
+    "kabbalist-of-the-code",
+    "beneath-eden",
+    "forgotten-star-saga",
+    "cube-of-the-scribe",
+  ]) {
+    const start = content.indexOf(`slug:"${slug}"`);
+    const end = content.indexOf("},", start);
+    const record = content.slice(start, end);
+    assert.doesNotMatch(record, /retailer:|isbn:/i);
+  }
+});

@@ -1,0 +1,629 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import {
+  BookCard,
+  BookCover,
+  Breadcrumbs,
+  EmptyState,
+  FormBlock,
+  Newsletter,
+  PageHero,
+  Shell,
+  Status,
+  StructuredData,
+} from "../../components/site";
+import {
+  books,
+  findBook,
+  findSeries,
+  news,
+  projects,
+  series,
+  site,
+} from "../../lib/content";
+
+type Props = {
+  params: Promise<{ path: string[] }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
+const titleFor = (path: string[]) =>
+  path[0] === "books" && path[1]
+    ? findBook(path[1])?.title
+    : path[0] === "series" && path[1]
+      ? findSeries(path[1])?.title
+      : (
+          {
+            books: "Books",
+            series: "Series",
+            "231-gates": "231 Gates",
+            projects: "Projects",
+            about: "About",
+            news: "News",
+            press: "Press",
+            contact: "Contact",
+            "publisher-inquiries": "Publisher inquiries",
+            privacy: "Privacy",
+            terms: "Terms",
+            search: "Search",
+          } as Record<string, string>
+        )[path[0]];
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { path } = await params;
+  const title = titleFor(path);
+  if (!title) return {};
+  const book = path[0] === "books" && path[1] ? findBook(path[1]) : undefined;
+  return {
+    title,
+    description: book?.seo ?? `${title} — Kiah Aviyu’s Living Library.`,
+    alternates: { canonical: `/${path.join("/")}` },
+    openGraph: {
+      title: `${title} | Kiah Aviyu`,
+      description: book?.seo ?? `${title} — Kiah Aviyu’s Living Library.`,
+    },
+  };
+}
+
+export default async function RoutePage({ params, searchParams }: Props) {
+  const { path } = await params;
+  const query = await searchParams;
+  const [root, slug] = path;
+  if (root === "books" && slug) {
+    const b = findBook(slug);
+    if (!b) notFound();
+    const related = books
+      .filter(
+        (x) =>
+          x.slug !== b.slug &&
+          (x.series === b.series || x.category === b.category),
+      )
+      .slice(0, 3);
+    return (
+      <Shell>
+        <Breadcrumbs items={[["Home", "/"], ["Books", "/books"], [b.title]]} />
+        <article className="book-detail section-pad">
+          <BookCover book={b} />
+          <div>
+            <p className="kicker">{b.category}</p>
+            <Status>{b.status}</Status>
+            <h1>{b.title}</h1>
+            {b.subtitle && <h2>{b.subtitle}</h2>}
+            <p className="lead">{b.long}</p>
+            {b.series && (
+              <p>
+                <strong>Series:</strong>{" "}
+                <Link
+                  href={`/series/${series.find((s) => b.series?.startsWith(s.title.split(" ")[0]))?.slug ?? "celestial-library"}`}
+                >
+                  {b.series}
+                </Link>
+              </p>
+            )}
+            {b.formats && (
+              <p>
+                <strong>Formats:</strong> {b.formats.join(", ")}
+              </p>
+            )}
+            {b.isbn && (
+              <p>
+                <strong>ISBN:</strong> {b.isbn}
+              </p>
+            )}
+            <div className="button-row">
+              {b.retailer ? (
+                <a
+                  className="button gold"
+                  href={b.retailer}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Find a copy ↗
+                </a>
+              ) : (
+                <p className="availability">
+                  Retailer information will appear when confirmed.
+                </p>
+              )}
+            </div>
+          </div>
+          <StructuredData
+            data={{
+              "@context": "https://schema.org",
+              "@type": "Book",
+              name: b.title,
+              alternateName: b.subtitle,
+              author: { "@type": "Person", name: site.name },
+              isbn: b.isbn,
+              bookFormat: b.formats?.join(", "),
+              url: `${site.domain}/books/${b.slug}`,
+            }}
+          />
+        </article>
+        <section className="related section-pad">
+          <h2>Related books</h2>
+          <div className="book-grid">
+            {related.map((x) => (
+              <BookCard book={x} key={x.slug} />
+            ))}
+          </div>
+        </section>
+      </Shell>
+    );
+  }
+  if (root === "books" && !slug) {
+    const term = String(query.q ?? "").toLowerCase();
+    const cat = String(query.category ?? "");
+    const status = String(query.status ?? "");
+    const filtered = books.filter(
+      (b) =>
+        (!term ||
+          `${b.title} ${b.subtitle ?? ""} ${b.short}`
+            .toLowerCase()
+            .includes(term)) &&
+        (!cat || b.category === cat) &&
+        (!status || b.status === status),
+    );
+    return (
+      <Shell>
+        <PageHero
+          kicker="The catalog"
+          title="Books as gates."
+          intro="Browse the published and developing works of Kiah Aviyu. Unconfirmed publication details are intentionally omitted."
+        />
+        <form className="filters" action="/books">
+          <label>
+            Search
+            <input
+              name="q"
+              defaultValue={String(query.q ?? "")}
+              placeholder="Title or subject"
+            />
+          </label>
+          <label>
+            Category
+            <select name="category" defaultValue={cat}>
+              <option value="">All categories</option>
+              {[...new Set(books.map((b) => b.category))].map((x) => (
+                <option key={x}>{x}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Status
+            <select name="status" defaultValue={status}>
+              <option value="">All statuses</option>
+              {[...new Set(books.map((b) => b.status))].map((x) => (
+                <option key={x}>{x}</option>
+              ))}
+            </select>
+          </label>
+          <button>Filter</button>
+        </form>
+        <section className="book-grid catalog section-pad">
+          {filtered.length ? (
+            filtered.map((b) => <BookCard book={b} key={b.slug} />)
+          ) : (
+            <EmptyState
+              title="No books found"
+              text="Try removing a filter or searching with a broader phrase."
+            />
+          )}
+        </section>
+      </Shell>
+    );
+  }
+  if (root === "series" && slug) {
+    const s = findSeries(slug);
+    if (!s) notFound();
+    const entries = books.filter(
+      (b) =>
+        b.series
+          ?.toLowerCase()
+          .includes(s.title.split(" ").slice(-2).join(" ").toLowerCase()) ||
+        (s.slug === "mystical-nonfiction" &&
+          b.category === "Mystical Nonfiction"),
+    );
+    return (
+      <Shell>
+        <Breadcrumbs
+          items={[["Home", "/"], ["Series", "/series"], [s.title]]}
+        />
+        <PageHero kicker="Series & worlds" title={s.title} intro={s.short} />
+        <section className="book-grid catalog section-pad">
+          {entries.length ? (
+            entries.map((b) => <BookCard book={b} key={b.slug} />)
+          ) : (
+            <EmptyState
+              title="The shelf is forming"
+              text="Entries will appear here as their placement is confirmed."
+            />
+          )}
+        </section>
+      </Shell>
+    );
+  }
+  if (root === "series")
+    return (
+      <Shell>
+        <PageHero
+          kicker="Connected bodies of work"
+          title="Series & worlds."
+          intro="Some books stand alone. Others open onto architectures that continue across volumes, gates, and related projects."
+        />
+        <section className="series-grid section-pad">
+          {series.map((s, i) => (
+            <Link href={`/series/${s.slug}`} key={s.slug}>
+              <span>0{i + 1}</span>
+              <h2>{s.title}</h2>
+              <p>{s.short}</p>
+              <b>Enter series →</b>
+            </Link>
+          ))}
+        </section>
+      </Shell>
+    );
+  if (root === "231-gates")
+    return (
+      <Shell>
+        <PageHero
+          kicker="The Living Library"
+          title="The Celestial Library of the 231 Gates"
+          intro="A connected body of books, gates, trees, reflections, and related explorations—literary architecture, not a claim of established doctrine."
+        />
+        <section className="gates section-pad">
+          <div className="gate-diagram" aria-hidden="true">
+            {Array.from({ length: 22 }, (_, i) => (
+              <span key={i}>{String(i + 1).padStart(2, "0")}</span>
+            ))}
+          </div>
+          <div>
+            <h2>Twenty-two visible elements.</h2>
+            <p>
+              The library uses the gate as an organizing metaphor: each book or
+              reflection may be entered independently, while resonances form
+              across the whole.
+            </p>
+            <h3>Aleph Olam</h3>
+            <p>
+              The hidden twenty-third remains veiled—present at the edge of the
+              architecture, named without being over-explained.
+            </p>
+            <Link className="button dark" href="/series/celestial-library">
+              View library entries
+            </Link>
+          </div>
+        </section>
+      </Shell>
+    );
+  if (root === "projects")
+    return (
+      <Shell>
+        <PageHero
+          kicker="Connected worlds"
+          title="Separate doors. Shared light."
+          intro="Related projects have their own purposes and audiences. KiahAviyu.com remains the author gate."
+        />
+        <section className="project-grid page-projects section-pad">
+          {projects.map((p) => (
+            <a href={p.url} target="_blank" rel="noreferrer" key={p.title}>
+              <span>◇</span>
+              <h2>{p.title}</h2>
+              <p>{p.short}</p>
+              <b>Visit project ↗</b>
+            </a>
+          ))}
+        </section>
+      </Shell>
+    );
+  if (root === "about")
+    return (
+      <Shell>
+        <PageHero
+          kicker="The author"
+          title="Kiah Aviyu"
+          intro="An author working with Hebrew letters, sacred symbolism, speculative story, and the persistent questions beneath language and reality."
+        />
+        <section className="prose section-pad">
+          <h2>Books as gates and maps of return.</h2>
+          <p>
+            Kiah Aviyu’s work attends to Hebrew letters as architecture and
+            language, and to story as a disciplined space for questions about
+            physics, symbolism, meaning, and return.
+          </p>
+          <p>
+            The fiction and mystical nonfiction belong to connected literary
+            worlds without collapsing those worlds into doctrine. Torah-first
+            respect, careful language, and aniconic visual thought guide the
+            public presentation of the work.
+          </p>
+          <p>
+            No public claim is made here to rabbinic, academic, institutional,
+            or religious authority.
+          </p>
+        </section>
+      </Shell>
+    );
+  if (root === "news" && slug) {
+    const n = news.find((x) => x.slug === slug);
+    if (!n) notFound();
+    return (
+      <Shell>
+        <Breadcrumbs items={[["Home", "/"], ["News", "/news"], [n.title]]} />
+        <article className="news-detail section-pad">
+          <p className="kicker">
+            News · <time dateTime={n.date}>{n.date}</time>
+          </p>
+          <h1>{n.title}</h1>
+          <p className="lead">{n.excerpt}</p>
+          <p>
+            The new structure brings the catalog, series, 231 Gates, connected
+            projects, and public-benefit mission into one calm, maintainable
+            home. Confirmed details will continue to replace conservative status
+            notes as the library grows.
+          </p>
+        </article>
+      </Shell>
+    );
+  }
+  if (root === "news")
+    return (
+      <Shell>
+        <PageHero
+          kicker="Notes from the library"
+          title="News"
+          intro="Release notes, publication updates, and changes across the connected worlds."
+        />
+        <section className="news-list section-pad">
+          {news.map((n) => (
+            <article key={n.slug}>
+              <time dateTime={n.date}>{n.date}</time>
+              <h2>
+                <Link href={`/news/${n.slug}`}>{n.title}</Link>
+              </h2>
+              <p>{n.excerpt}</p>
+              <Link className="arrow-link" href={`/news/${n.slug}`}>
+                Read update →
+              </Link>
+            </article>
+          ))}
+        </section>
+        <Newsletter />
+      </Shell>
+    );
+  if (root === "press")
+    return (
+      <Shell>
+        <PageHero
+          kicker="Press room"
+          title="Press & interviews"
+          intro="Approved background, interview themes, selected book covers, and a clear path for media inquiries."
+        />
+        <section className="press-grid section-pad">
+          <div>
+            <h2>Short biography</h2>
+            <p>
+              Kiah Aviyu is an author of mystical nonfiction and speculative
+              literary works shaped by Hebrew language, sacred symbolism, and
+              questions of meaning.
+            </p>
+            <h2>Long biography</h2>
+            <p>
+              Kiah Aviyu writes across connected literary and conceptual worlds.
+              The work considers Hebrew letters as architecture, story as a
+              vessel for inquiry, and books as gates into recurring questions of
+              knowledge, trial, return, and reality. KiahAviyu.com is the author
+              home; LuminaNexus.org carries the related educational and
+              public-benefit mission.
+            </p>
+          </div>
+          <div>
+            <h2>Interview topics</h2>
+            <ul>
+              <li>Building a connected living library</li>
+              <li>Hebrew letters as literary architecture</li>
+              <li>Mystical inquiry and speculative fiction</li>
+              <li>Torah-first respect in imaginative work</li>
+              <li>Aniconic design and sacred symbolism</li>
+            </ul>
+            <h2>Rights & permissions</h2>
+            <p>
+              Book-cover use, excerpts, interviews, and permissions require
+              written approval. No rights status should be inferred from this
+              page.
+            </p>
+            <Link className="button dark" href="/contact">
+              Request press materials
+            </Link>
+          </div>
+        </section>
+        <section className="selected-covers section-pad">
+          {books.slice(0, 2).map((b) => (
+            <BookCover book={b} key={b.slug} />
+          ))}
+        </section>
+      </Shell>
+    );
+  if (root === "contact")
+    return (
+      <Shell>
+        <PageHero
+          kicker="Contact"
+          title="Begin a conversation."
+          intro="General, press, review, and rights inquiries can begin here."
+        />
+        <FormBlock kind="contact" title="Contact Kiah Aviyu" />
+      </Shell>
+    );
+  if (root === "publisher-inquiries")
+    return (
+      <Shell>
+        <PageHero
+          kicker="Professional inquiries"
+          title="Publishers, rights & adaptations"
+          intro="A professional path for manuscript, translation, adaptation, speaking, interview, bulk, and institutional inquiries."
+        />
+        <section className="inquiry-overview section-pad">
+          <div>
+            <h2>Areas of work</h2>
+            <p>
+              Mystical nonfiction, speculative fiction, connected series, Hebrew
+              symbolism, literary world-building, curriculum-adjacent projects,
+              and related public conversations.
+            </p>
+          </div>
+          <ul>
+            <li>Manuscript inquiries</li>
+            <li>Rights and licensing</li>
+            <li>Translation rights</li>
+            <li>Film, television, game, and adaptation inquiries</li>
+            <li>Speaking and interviews</li>
+            <li>Bulk and institutional orders</li>
+          </ul>
+        </section>
+        <FormBlock kind="publisher" title="Publisher inquiry" />
+      </Shell>
+    );
+  if (root === "privacy")
+    return (
+      <Shell>
+        <PageHero
+          kicker="Policy"
+          title="Privacy"
+          intro="A privacy-first site with no unnecessary tracking or cookies."
+        />
+        <section className="prose section-pad">
+          <h2>Information you provide</h2>
+          <p>
+            Forms are not currently connected to a delivery provider and
+            therefore do not submit or store personal information. This notice
+            will be updated before form delivery is enabled.
+          </p>
+          <h2>Analytics and cookies</h2>
+          <p>
+            No optional analytics or advertising cookies are intentionally
+            configured in this site.
+          </p>
+          <h2>External links</h2>
+          <p>
+            External sites apply their own privacy practices. Review those
+            policies before providing information.
+          </p>
+        </section>
+      </Shell>
+    );
+  if (root === "terms")
+    return (
+      <Shell>
+        <PageHero
+          kicker="Policy"
+          title="Terms"
+          intro="Terms for use of the Kiah Aviyu author site."
+        />
+        <section className="prose section-pad">
+          <h2>Copyright</h2>
+          <p>
+            Site text, book titles, cover treatments, and original materials are
+            protected by applicable rights. No license is granted except
+            ordinary personal viewing of the site.
+          </p>
+          <h2>Accuracy</h2>
+          <p>
+            Publication and project information may change. Unconfirmed details
+            are intentionally marked or omitted.
+          </p>
+          <h2>External services</h2>
+          <p>
+            Links to retailers and related projects are provided for
+            convenience; their terms govern your use of those services.
+          </p>
+        </section>
+      </Shell>
+    );
+  if (root === "search") {
+    const q = String(query.q ?? "").trim();
+    const hay = [
+      ...books.map((b) => ({
+        type: "Book",
+        title: b.title,
+        text: `${b.subtitle ?? ""} ${b.short}`,
+        url: `/books/${b.slug}`,
+      })),
+      ...series.map((s) => ({
+        type: "Series",
+        title: s.title,
+        text: s.short,
+        url: `/series/${s.slug}`,
+      })),
+      ...news.map((n) => ({
+        type: "News",
+        title: n.title,
+        text: n.excerpt,
+        url: `/news/${n.slug}`,
+      })),
+      ...projects.map((p) => ({
+        type: "Project",
+        title: p.title,
+        text: p.short,
+        url: p.url,
+      })),
+    ];
+    const results = q
+      ? hay.filter((x) =>
+          `${x.title} ${x.text}`.toLowerCase().includes(q.toLowerCase()),
+        )
+      : [];
+    return (
+      <Shell>
+        <PageHero
+          kicker="Across the library"
+          title="Search"
+          intro="Search books, series, news, and connected projects."
+        />
+        <form className="search-form" action="/search">
+          <label>
+            Search the library
+            <input
+              name="q"
+              defaultValue={q}
+              autoFocus
+              placeholder="Try ‘Alef’ or ‘Gates’"
+            />
+          </label>
+          <button>Search</button>
+        </form>
+        <section className="search-results section-pad">
+          {q ? (
+            results.length ? (
+              results.map((r) => (
+                <article key={`${r.type}-${r.title}`}>
+                  <span>{r.type}</span>
+                  <h2>
+                    {r.url.startsWith("http") ? (
+                      <a href={r.url} target="_blank" rel="noreferrer">
+                        {r.title} ↗
+                      </a>
+                    ) : (
+                      <Link href={r.url}>{r.title}</Link>
+                    )}
+                  </h2>
+                  <p>{r.text}</p>
+                </article>
+              ))
+            ) : (
+              <EmptyState
+                title="No results"
+                text={`Nothing matched “${q}”. Try a title, series, or broader subject.`}
+              />
+            )
+          ) : (
+            <EmptyState
+              title="The library is ready"
+              text="Enter a word or phrase to begin searching."
+            />
+          )}
+        </section>
+      </Shell>
+    );
+  }
+  notFound();
+}
