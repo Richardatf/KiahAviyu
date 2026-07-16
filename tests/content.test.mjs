@@ -33,7 +33,6 @@ test("forbidden placeholders and artifacts are absent", async () => {
     "app/[...path]/page.tsx",
     "components/site.tsx",
     "lib/content.ts",
-    "lib/books.ts",
   ];
   for (const f of files) {
     const text = await read(f);
@@ -44,7 +43,7 @@ test("forbidden placeholders and artifacts are absent", async () => {
   }
 });
 test("owner-verified Amazon products use direct links", async () => {
-  const content = await read("lib/books.ts");
+  const content = await read("lib/content.ts");
   for (const product of [
     "Tower-Daat-Kiah-Aviyu/dp/033692142X",
     "MERKAVAT-HAEL-CHARIOT-DIVINE-AVIYU/dp/B0GPW2KX2T",
@@ -61,7 +60,7 @@ test("owner-verified Amazon products use direct links", async () => {
 });
 
 test("verified products use local official cover files", async () => {
-  const content = await read("lib/books.ts");
+  const content = await read("lib/content.ts");
   for (const slug of [
     "merkavat-hael",
     "tower-of-daat",
@@ -91,14 +90,13 @@ test("approved and generated brand artwork is project-local", async () => {
 });
 
 test("unpublished catalog and publisher inquiry content are absent", async () => {
-  const [content, books, page, shell, sitemap] = await Promise.all([
+  const [content, page, shell, sitemap] = await Promise.all([
     read("lib/content.ts"),
-    read("lib/books.ts"),
     read("app/[...path]/page.tsx"),
     read("components/site.tsx"),
     read("app/sitemap.ts"),
   ]);
-  const source = content + books + page + shell + sitemap;
+  const source = content + page + shell + sitemap;
   assert.doesNotMatch(
     source,
     /In Development|Coming Soon|publisher-inquiries/i,
@@ -110,23 +108,35 @@ test("unpublished catalog and publisher inquiry content are absent", async () =>
     "forgotten-star-saga",
     "cube-of-the-scribe",
   ]) {
-    assert.doesNotMatch(books, new RegExp(`slug: "${slug}"`));
+    assert.doesNotMatch(content, new RegExp(`slug: "${slug}"`));
   }
 });
 
 test("book facts have one verified source of truth", async () => {
-  const [content, books, shell] = await Promise.all([
+  const [content, shell] = await Promise.all([
     read("lib/content.ts"),
-    read("lib/books.ts"),
     read("components/site.tsx"),
   ]);
-  assert.match(content, /export \{ books, findBook \} from "\.\/books"/);
-  assert.doesNotMatch(content, /title: "MERKAVAT/);
-  assert.match(books, /Thanking HaShem for the One Who Tries Us/);
-  assert.doesNotMatch(books + shell, /Through the Tries|When He Tries You/);
-  assert.match(books, /isbn: "033692142X"/);
-  assert.doesNotMatch(books, /978-1-969659-10-2/);
-  assert.match(books, /publicationStatus: "published"/);
-  assert.match(books, /verification: verified/);
+  assert.match(content, /export const books: Book\[\]/);
+  assert.match(content, /Thanking HaShem for the One Who Tries Us/);
+  assert.doesNotMatch(content + shell, /Through the Tries|When He Tries You/);
+  assert.match(content, /isbn: "033692142X"/);
+  assert.doesNotMatch(content, /978-1-969659-10-2/);
+  assert.match(content, /publicationStatus: "published"/);
+  assert.match(content, /verification: verified/);
   assert.match(shell, /width=\{book\.coverWidth\}/);
+});
+
+test("the catalog uses the author's mystical fiction taxonomy", async () => {
+  const [content, home] = await Promise.all([
+    read("lib/content.ts"),
+    read("app/page.tsx"),
+  ]);
+  assert.doesNotMatch(content + home, /Mystical Nonfiction|Fiction & Myth/);
+  assert.equal(
+    [...content.matchAll(/category: "Mystical Fiction"/g)].length,
+    10,
+  );
+  assert.match(content, /title: "The Forgotten Star Saga"/);
+  assert.match(content, /slug: "forgotten-star"/);
 });

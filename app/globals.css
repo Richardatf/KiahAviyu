@@ -528,7 +528,7 @@ main {
   background: var(--midnight);
   color: var(--ivory);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 9vw;
   align-items: center;
 }
@@ -536,7 +536,10 @@ main {
   max-width: 700px;
 }
 .library-artwork {
-  width: 100%;
+  display: block;
+  min-width: 100%;
+  max-width: 100%;
+  width: 0;
   height: auto;
   border: 1px solid #cfaa6430;
   box-shadow: 0 30px 70px #0007;
@@ -1129,7 +1132,7 @@ footer {
     grid-template-columns: repeat(2, 1fr);
   }
   .library-intro {
-    grid-template-columns: 0.8fr 1.2fr;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   }
   .newsletter {
     grid-template-columns: 1fr;
@@ -1175,7 +1178,7 @@ footer {
   .inquiry-overview,
   .about-story,
   .author-mark {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .featured-grid .book-cover,
   .book-detail .book-cover {

@@ -133,9 +133,9 @@ export default function Home() {
           {[
             [
               "01",
-              "Fiction & Myth",
-              "Stories that carry symbolic worlds and speculative questions.",
-              "/books?category=Fiction+%26+Myth",
+              "Mystical Fiction",
+              "Stories of sacred imagination, symbolic worlds, and speculative questions.",
+              "/books?category=Mystical+Fiction",
             ],
             [
               "02",

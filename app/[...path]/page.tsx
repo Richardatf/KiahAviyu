@@ -231,13 +231,10 @@ export default async function RoutePage({ params, searchParams }: Props) {
   if (root === "series" && slug) {
     const s = findSeries(slug);
     if (!s) notFound();
-    const entries = books.filter(
-      (b) =>
-        b.series
-          ?.toLowerCase()
-          .includes(s.title.split(" ").slice(-2).join(" ").toLowerCase()) ||
-        (s.slug === "mystical-nonfiction" &&
-          b.category === "Mystical Nonfiction"),
+    const entries = books.filter((b) =>
+      b.series
+        ?.toLowerCase()
+        .includes(s.title.split(" ").slice(-2).join(" ").toLowerCase()),
     );
     return (
       <Shell>
@@ -360,10 +357,10 @@ export default async function RoutePage({ params, searchParams }: Props) {
               physics, symbolism, meaning, and return.
             </p>
             <p>
-              The fiction and mystical nonfiction belong to connected literary
-              worlds without collapsing those worlds into doctrine. Torah-first
-              respect, careful language, and aniconic visual thought guide the
-              public presentation of the work.
+              The mystical fiction belongs to connected literary worlds without
+              collapsing those worlds into doctrine. Torah-first respect,
+              careful language, and aniconic visual thought guide the public
+              presentation of the work.
             </p>
             <p>
               No public claim is made here to rabbinic, academic, institutional,
@@ -435,9 +432,8 @@ export default async function RoutePage({ params, searchParams }: Props) {
           <div>
             <h2>Short biography</h2>
             <p>
-              Kiah Aviyu is an author of mystical nonfiction and speculative
-              literary works shaped by Hebrew language, sacred symbolism, and
-              questions of meaning.
+              Kiah Aviyu is an author of mystical fiction shaped by Hebrew
+              language, sacred symbolism, and questions of meaning.
             </p>
             <h2>Long biography</h2>
             <p>
