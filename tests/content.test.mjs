@@ -45,10 +45,7 @@ test("forbidden placeholders and artifacts are absent", async () => {
 test("unverified books do not contain retailer or ISBN metadata", async () => {
   const content = await read("lib/content.ts");
   for (const slug of [
-    "adam-kadmon",
     "eheyeh",
-    "do-you-hear-voices",
-    "the-god-that-ate-grass",
     "kabbalist-of-the-code",
     "beneath-eden",
     "forgotten-star-saga",
@@ -68,6 +65,11 @@ test("owner-verified Amazon products use direct links", async () => {
     "MERKAVAT-HAEL-CHARIOT-DIVINE-AVIYU/dp/B0GPW2KX2T",
     "ADVERSARYS-PRAYER-Thanking-HaShem-Tries/dp/1969659459",
     "QUANTUM-ETZ-CHAIM-KIAH-AVIYU/dp/1969659254",
+    "God-That-Ate-Grass/dp/B0H6VW4QS4",
+    "You-Hear-Voices-Kiah-Aviyu/dp/B0H7LB9KGP",
+    "ADAM-KADMON-KIAH-AVIYU/dp/196965953X",
+    "INFINITE-WAVE-Kiah-Aviyu/dp/1969659688",
+    "TIFERET-Kiah-Aviyu/dp/1969659394",
   ]) {
     assert.match(content, new RegExp(product));
   }

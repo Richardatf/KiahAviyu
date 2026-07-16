@@ -414,6 +414,12 @@ main {
 .cover-quantum {
   background: linear-gradient(145deg, #0b222b, #314f4c);
 }
+.cover-wave {
+  background: linear-gradient(160deg, #0b1a2b, #315a68);
+}
+.cover-tiferet {
+  background: linear-gradient(145deg, #251c16, #9a753b);
+}
 .cover-eden {
   background: #253326;
 }
