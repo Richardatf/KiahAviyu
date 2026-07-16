@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
   BookCard,
@@ -271,11 +272,14 @@ export default async function RoutePage({ params, searchParams }: Props) {
           intro="A connected body of books, gates, trees, reflections, and related explorations—literary architecture, not a claim of established doctrine."
         />
         <section className="gates section-pad">
-          <div className="gate-diagram" aria-hidden="true">
-            {Array.from({ length: 22 }, (_, i) => (
-              <span key={i}>{String(i + 1).padStart(2, "0")}</span>
-            ))}
-          </div>
+          <Image
+            className="gates-artwork"
+            src="/brand/gates-lattice.jpg"
+            alt="Abstract lattice of luminous architectural gates with one veiled position"
+            width={1536}
+            height={1536}
+            sizes="(max-width: 700px) 100vw, 55vw"
+          />
           <div>
             <h2>Twenty-two visible elements.</h2>
             <p>
@@ -323,23 +327,33 @@ export default async function RoutePage({ params, searchParams }: Props) {
           title="Kiah Aviyu"
           intro="An author working with Hebrew letters, sacred symbolism, speculative story, and the persistent questions beneath language and reality."
         />
-        <section className="prose section-pad">
-          <h2>Books as gates and maps of return.</h2>
-          <p>
-            Kiah Aviyu’s work attends to Hebrew letters as architecture and
-            language, and to story as a disciplined space for questions about
-            physics, symbolism, meaning, and return.
-          </p>
-          <p>
-            The fiction and mystical nonfiction belong to connected literary
-            worlds without collapsing those worlds into doctrine. Torah-first
-            respect, careful language, and aniconic visual thought guide the
-            public presentation of the work.
-          </p>
-          <p>
-            No public claim is made here to rabbinic, academic, institutional,
-            or religious authority.
-          </p>
+        <section className="about-story section-pad">
+          <Image
+            className="title-page-art"
+            src="/brand/title-page.jpg"
+            alt="Kiah Aviyu title-page mark with the Hebrew name קיה אביעו"
+            width={1086}
+            height={1450}
+            sizes="(max-width: 700px) 90vw, 35vw"
+          />
+          <div className="prose">
+            <h2>Books as gates and maps of return.</h2>
+            <p>
+              Kiah Aviyu’s work attends to Hebrew letters as architecture and
+              language, and to story as a disciplined space for questions about
+              physics, symbolism, meaning, and return.
+            </p>
+            <p>
+              The fiction and mystical nonfiction belong to connected literary
+              worlds without collapsing those worlds into doctrine. Torah-first
+              respect, careful language, and aniconic visual thought guide the
+              public presentation of the work.
+            </p>
+            <p>
+              No public claim is made here to rabbinic, academic, institutional,
+              or religious authority.
+            </p>
+          </div>
         </section>
       </Shell>
     );
@@ -434,6 +448,30 @@ export default async function RoutePage({ params, searchParams }: Props) {
             <Link className="button dark" href="/contact">
               Request press materials
             </Link>
+          </div>
+        </section>
+        <section className="author-mark section-pad">
+          <Image
+            src="/brand/kiah-aviyu-logo.jpg"
+            alt="Kiah Aviyu logo: an open book, ascending flame forms, and a gold star"
+            width={1254}
+            height={1254}
+            sizes="(max-width: 700px) 90vw, 420px"
+          />
+          <div>
+            <p className="kicker">Approved author mark</p>
+            <h2>Kiah Aviyu identity artwork</h2>
+            <p>
+              This supplied mark may be used with permission in approved press
+              coverage. Do not alter, redraw, recolor, or extract its elements.
+            </p>
+            <a
+              className="button dark"
+              href="/brand/kiah-aviyu-logo.jpg"
+              download
+            >
+              Download author mark
+            </a>
           </div>
         </section>
         <section className="selected-covers section-pad">

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   BookCard,
   BookCover,
@@ -32,6 +33,15 @@ export default function Home() {
         }}
       />
       <section className="home-hero">
+        <Image
+          className="hero-artwork"
+          src="/brand/living-gate-hero.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          aria-hidden="true"
+        />
         <div className="gate-art" aria-hidden="true">
           <span />
           <span />
@@ -143,12 +153,14 @@ export default function Home() {
       </section>
 
       <section className="library-intro section-pad">
-        <div className="tree-motif" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
+        <Image
+          className="library-artwork"
+          src="/brand/celestial-library.jpg"
+          alt="An abstract open book branching into gates, paths, and geometric light"
+          width={1536}
+          height={1024}
+          sizes="(max-width: 700px) 100vw, 50vw"
+        />
         <div>
           <p className="kicker">The Living Library</p>
           <h2>

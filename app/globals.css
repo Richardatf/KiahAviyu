@@ -171,6 +171,23 @@ main {
   );
   opacity: 0.4;
 }
+.hero-artwork {
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.78;
+}
+.home-hero:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    #06101af5 0%,
+    #07131fd9 42%,
+    #07131f26 78%
+  );
+}
 .hero-copy,
 .hero-side {
   position: relative;
@@ -518,6 +535,12 @@ main {
 .library-intro > div {
   max-width: 700px;
 }
+.library-artwork {
+  width: 100%;
+  height: auto;
+  border: 1px solid #cfaa6430;
+  box-shadow: 0 30px 70px #0007;
+}
 .library-intro .kicker,
 .lumina .kicker {
   color: var(--gold);
@@ -845,6 +868,40 @@ main {
   gap: 8vw;
   align-items: center;
 }
+.gates-artwork {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 70px #07131f33;
+}
+.about-story {
+  max-width: 1250px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: minmax(260px, 420px) 1fr;
+  gap: 8vw;
+  align-items: center;
+}
+.title-page-art {
+  width: 100%;
+  height: auto;
+  box-shadow: 0 22px 50px #1112;
+}
+.author-mark {
+  background: var(--parchment);
+  display: grid;
+  grid-template-columns: minmax(280px, 440px) 1fr;
+  gap: 8vw;
+  align-items: center;
+}
+.author-mark img {
+  width: 100%;
+  height: auto;
+  box-shadow: 0 22px 50px #1112;
+}
+.author-mark h2 {
+  font: 400 48px/1.05 var(--serif);
+}
 .gate-diagram {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -1115,7 +1172,9 @@ footer {
   .book-detail,
   .gates,
   .press-grid,
-  .inquiry-overview {
+  .inquiry-overview,
+  .about-story,
+  .author-mark {
     grid-template-columns: 1fr;
   }
   .featured-grid .book-cover,

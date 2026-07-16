@@ -92,3 +92,15 @@ test("verified products use local official cover files", async () => {
     await access(new URL(`../public/covers/${slug}.jpg`, import.meta.url));
   }
 });
+
+test("approved and generated brand artwork is project-local", async () => {
+  for (const file of [
+    "kiah-aviyu-logo.jpg",
+    "title-page.jpg",
+    "living-gate-hero.jpg",
+    "celestial-library.jpg",
+    "gates-lattice.jpg",
+  ]) {
+    await access(new URL(`../public/brand/${file}`, import.meta.url));
+  }
+});
