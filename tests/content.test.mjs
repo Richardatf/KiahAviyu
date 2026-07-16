@@ -60,3 +60,15 @@ test("unverified books do not contain retailer or ISBN metadata", async () => {
     assert.doesNotMatch(record, /retailer:|isbn:/i);
   }
 });
+
+test("owner-verified Amazon products use direct links", async () => {
+  const content = await read("lib/content.ts");
+  for (const product of [
+    "Tower-Daat-Kiah-Aviyu/dp/033692142X",
+    "MERKAVAT-HAEL-CHARIOT-DIVINE-AVIYU/dp/B0GPW2KX2T",
+    "ADVERSARYS-PRAYER-Thanking-HaShem-Tries/dp/1969659459",
+    "QUANTUM-ETZ-CHAIM-KIAH-AVIYU/dp/1969659254",
+  ]) {
+    assert.match(content, new RegExp(product));
+  }
+});

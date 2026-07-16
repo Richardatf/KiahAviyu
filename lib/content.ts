@@ -35,7 +35,8 @@ export const books: Book[] = [
     short:
       "A central work in Kiah Aviyu’s growing library of mystical inquiry.",
     long: "MERKAVAT HA’EL stands at the threshold of the Living Library, inviting careful inquiry into divine mystery, language, and the architecture of meaning.",
-    retailer: "https://www.amazon.com/s?k=Merkavat+Ha%27El+Kiah+Aviyu",
+    retailer:
+      "https://www.amazon.com/MERKAVAT-HAEL-CHARIOT-DIVINE-AVIYU/dp/B0GPW2KX2T",
     featured: true,
     coverStyle: "merkavat",
     seo: "MERKAVAT HA’EL — The Chariot of the Divine by Kiah Aviyu.",
@@ -50,7 +51,7 @@ export const books: Book[] = [
     long: "TOWER OF DA’AT considers knowledge as ascent: a disciplined movement through language, symbol, and the questions that shape understanding.",
     isbn: "978-1-969659-10-2",
     formats: ["Paperback"],
-    retailer: "https://www.amazon.com/s?k=Tower+of+Da%27at+Kiah+Aviyu",
+    retailer: "https://www.amazon.com/Tower-Daat-Kiah-Aviyu/dp/033692142X",
     featured: true,
     coverStyle: "tower",
     seo: "TOWER OF DA’AT by Kiah Aviyu.",
@@ -77,7 +78,8 @@ export const books: Book[] = [
     short:
       "A reflection on trial, gratitude, and the difficult work of prayer.",
     long: "A contemplative work about meeting adversity without flattening its difficulty, and about the place of gratitude within trial.",
-    retailer: "https://www.amazon.com/s?k=The+Adversary%27s+Prayer+Kiah+Aviyu",
+    retailer:
+      "https://www.amazon.com/ADVERSARYS-PRAYER-Thanking-HaShem-Tries/dp/1969659459",
     coverStyle: "prayer",
     seo: "THE ADVERSARY’S PRAYER by Kiah Aviyu.",
   },
@@ -124,6 +126,19 @@ export const books: Book[] = [
     long: "A developing project in the orbit of Quantum Etz Chaim. Further details will be added when confirmed.",
     coverStyle: "code",
     seo: "KABBALIST OF THE CODE, a developing work by Kiah Aviyu.",
+  },
+  {
+    title: "QUANTUM ETZ CHAIM",
+    slug: "quantum-etz-chaim",
+    series: "Quantum Etz Chaim",
+    category: "Mystical Nonfiction",
+    status: "Available",
+    short: "The Tree of Life considered as quantum architecture.",
+    long: "A work connecting the architecture of the Tree of Life with questions of physics, computation, consciousness, and information.",
+    retailer:
+      "https://www.amazon.com/QUANTUM-ETZ-CHAIM-KIAH-AVIYU/dp/1969659254",
+    coverStyle: "quantum",
+    seo: "QUANTUM ETZ CHAIM by Kiah Aviyu.",
   },
   {
     title: "BENEATH EDEN",
