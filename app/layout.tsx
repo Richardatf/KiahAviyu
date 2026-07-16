@@ -17,11 +17,20 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: "Kiah Aviyu — Welcome to the Gate",
     description: "Books, gates, trees, light, and connected literary worlds.",
+    images: [
+      {
+        url: "/brand/living-gate-hero.jpg",
+        width: 1672,
+        height: 941,
+        alt: "A luminous navy-and-gold gateway opening from a book",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Kiah Aviyu — Welcome to the Gate",
     description: "Author · Mystical Science · Living Library",
+    images: ["/brand/living-gate-hero.jpg"],
   },
   robots: { index: true, follow: true },
   icons: { icon: "/favicon.svg" },

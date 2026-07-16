@@ -18,11 +18,19 @@ export default function Home() {
         data={{
           "@context": "https://schema.org",
           "@graph": [
-            { "@type": "Person", name: site.name, url: site.domain },
+            {
+              "@type": "Person",
+              "@id": `${site.domain}/#author`,
+              name: site.name,
+              alternateName: site.hebrew,
+              url: site.domain,
+            },
             {
               "@type": "WebSite",
+              "@id": `${site.domain}/#website`,
               name: site.name,
               url: site.domain,
+              publisher: { "@id": `${site.domain}/#author` },
               potentialAction: {
                 "@type": "SearchAction",
                 target: `${site.domain}/search?q={search_term_string}`,

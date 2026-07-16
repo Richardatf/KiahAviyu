@@ -111,16 +111,36 @@ export function PageHero({
     </section>
   );
 }
-export function Breadcrumbs({ items }: { items: Array<[string, string?]> }) {
+export function Breadcrumbs({
+  items,
+  currentPath,
+}: {
+  items: Array<[string, string?]>;
+  currentPath: string;
+}) {
   return (
-    <nav className="breadcrumbs" aria-label="Breadcrumb">
-      {items.map(([label, url], i) => (
-        <span key={label}>
-          {i > 0 && <b aria-hidden="true">/</b>}
-          {url ? <Link href={url}>{label}</Link> : label}
-        </span>
-      ))}
-    </nav>
+    <>
+      <nav className="breadcrumbs" aria-label="Breadcrumb">
+        {items.map(([label, url], i) => (
+          <span key={label}>
+            {i > 0 && <b aria-hidden="true">/</b>}
+            {url ? <Link href={url}>{label}</Link> : label}
+          </span>
+        ))}
+      </nav>
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: items.map(([name, url], index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name,
+            item: `${site.domain}${url ?? currentPath}`,
+          })),
+        }}
+      />
+    </>
   );
 }
 export function BookCover({ book }: { book: Book }) {

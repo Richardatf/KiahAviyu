@@ -53,3 +53,56 @@ test("unknown routes return 404", async () => {
   );
   assert.equal(response.status, 404);
 });
+
+test("legacy addresses permanently redirect", async () => {
+  const app = await worker();
+  for (const [from, to] of [
+    ["/published", "/books"],
+    ["/unpublished", "/books"],
+    ["/pathways", "/projects"],
+  ]) {
+    const response = await app.fetch(new Request(`http://localhost${from}`));
+    assert.equal(response.status, 308, `${from} did not permanently redirect`);
+    assert.equal(new URL(response.headers.get("location")).pathname, to);
+  }
+});
+
+test("SEO routes and structured data are complete", async () => {
+  const app = await worker();
+  const home = await app.fetch(new Request("http://localhost/"));
+  const homeHtml = await home.text();
+  assert.match(homeHtml, /schema\.org/);
+  assert.match(homeHtml, /Person/);
+  assert.match(homeHtml, /WebSite/);
+  assert.match(homeHtml, /og:image/);
+  assert.match(homeHtml, /twitter:image/);
+
+  const book = await app.fetch(
+    new Request("http://localhost/books/merkavat-hael"),
+  );
+  const bookHtml = await book.text();
+  assert.match(bookHtml, /BreadcrumbList/);
+  assert.match(bookHtml, /\"@type\":\"Book\"/);
+
+  const sitemap = await app.fetch(new Request("http://localhost/sitemap.xml"));
+  assert.match(await sitemap.text(), /https:\/\/kiahaviyu\.com\/books/);
+  const robots = await app.fetch(new Request("http://localhost/robots.txt"));
+  assert.match(
+    await robots.text(),
+    /Sitemap: https:\/\/kiahaviyu\.com\/sitemap\.xml/,
+  );
+});
+
+test("every canonical URL in the sitemap resolves", async () => {
+  const app = await worker();
+  const sitemap = await app.fetch(new Request("http://localhost/sitemap.xml"));
+  const xml = await sitemap.text();
+  const paths = [
+    ...xml.matchAll(/<loc>https:\/\/kiahaviyu\.com([^<]*)<\/loc>/g),
+  ].map((match) => match[1] || "/");
+  assert.ok(paths.length > 10, "sitemap did not contain the catalog routes");
+  for (const path of paths) {
+    const response = await app.fetch(new Request(`http://localhost${path}`));
+    assert.equal(response.status, 200, `${path} returned ${response.status}`);
+  }
+});

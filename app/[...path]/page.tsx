@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import {
   BookCard,
   BookCover,
@@ -27,6 +27,11 @@ import {
 type Props = {
   params: Promise<{ path: string[] }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
+const legacyRedirects: Record<string, string> = {
+  published: "/books",
+  unpublished: "/books",
+  pathways: "/projects",
 };
 const titleFor = (path: string[]) =>
   path[0] === "books" && path[1]
@@ -60,6 +65,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${title} | Kiah Aviyu`,
       description: book?.seo ?? `${title} — Kiah Aviyu’s Living Library.`,
+      images: [
+        {
+          url: "/brand/living-gate-hero.jpg",
+          width: 1672,
+          height: 941,
+          alt: "A luminous navy-and-gold gateway opening from a book",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | Kiah Aviyu`,
+      description: book?.seo ?? `${title} — Kiah Aviyu’s Living Library.`,
+      images: ["/brand/living-gate-hero.jpg"],
     },
   };
 }
@@ -68,6 +87,7 @@ export default async function RoutePage({ params, searchParams }: Props) {
   const { path } = await params;
   const query = await searchParams;
   const [root, slug] = path;
+  if (legacyRedirects[root] && !slug) permanentRedirect(legacyRedirects[root]);
   if (root === "books" && slug) {
     const b = findBook(slug);
     if (!b) notFound();
@@ -80,7 +100,10 @@ export default async function RoutePage({ params, searchParams }: Props) {
       .slice(0, 3);
     return (
       <Shell>
-        <Breadcrumbs items={[["Home", "/"], ["Books", "/books"], [b.title]]} />
+        <Breadcrumbs
+          items={[["Home", "/"], ["Books", "/books"], [b.title]]}
+          currentPath={`/books/${b.slug}`}
+        />
         <article className="book-detail section-pad">
           <BookCover book={b} />
           <div>
@@ -130,11 +153,15 @@ export default async function RoutePage({ params, searchParams }: Props) {
             data={{
               "@context": "https://schema.org",
               "@type": "Book",
+              "@id": `${site.domain}/books/${b.slug}#book`,
               name: b.title,
               alternateName: b.subtitle,
-              author: { "@type": "Person", name: site.name },
+              author: { "@id": `${site.domain}/#author` },
               isbn: b.isbn,
               bookFormat: b.formats?.join(", "),
+              image: `${site.domain}${b.coverImage}`,
+              inLanguage: "en",
+              sameAs: b.retailer,
               url: `${site.domain}/books/${b.slug}`,
             }}
           />
@@ -216,6 +243,7 @@ export default async function RoutePage({ params, searchParams }: Props) {
       <Shell>
         <Breadcrumbs
           items={[["Home", "/"], ["Series", "/series"], [s.title]]}
+          currentPath={`/series/${s.slug}`}
         />
         <PageHero kicker="Series & worlds" title={s.title} intro={s.short} />
         <section className="book-grid catalog section-pad">
@@ -350,7 +378,10 @@ export default async function RoutePage({ params, searchParams }: Props) {
     if (!n) notFound();
     return (
       <Shell>
-        <Breadcrumbs items={[["Home", "/"], ["News", "/news"], [n.title]]} />
+        <Breadcrumbs
+          items={[["Home", "/"], ["News", "/news"], [n.title]]}
+          currentPath={`/news/${n.slug}`}
+        />
         <article className="news-detail section-pad">
           <p className="kicker">
             News · <time dateTime={n.date}>{n.date}</time>
