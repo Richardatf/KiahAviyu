@@ -1,134 +1,257 @@
-const amazonUrl =
-  "https://www.amazon.com/s?k=kiah+aviyu&crid=3J571DNG4UE31&sprefix=%2Caps%2C345&ref=nb_sb_ss_recent_2_0_recent";
-const merkavatUrl = "https://www.amazon.com/s?k=Merkavat+Ha%27El+Kiah+Aviyu";
-const towerUrl = "https://www.amazon.com/s?k=Tower+of+Da%27at+Kiah+Aviyu";
-
-const Arrow = () => <span aria-hidden="true">↗</span>;
+import Link from "next/link";
+import {
+  BookCard,
+  BookCover,
+  HebrewName,
+  Newsletter,
+  Shell,
+  StructuredData,
+} from "../components/site";
+import { books, news, projects, site } from "../lib/content";
 
 export default function Home() {
+  const featured = books[0];
   return (
-    <main>
-      <nav className="nav" aria-label="Primary navigation">
-        <a className="wordmark" href="#top" aria-label="Kiah Aviyu home">
-          KIAH <i>·</i> AVIYU
-        </a>
-        <div className="nav-links">
-          <a href="#books">Books</a>
-          <a href="#about">About</a>
-          <a className="nav-cta" href={amazonUrl} target="_blank" rel="noreferrer">
-            Shop books <Arrow />
-          </a>
+    <Shell>
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            { "@type": "Person", name: site.name, url: site.domain },
+            {
+              "@type": "WebSite",
+              name: site.name,
+              url: site.domain,
+              potentialAction: {
+                "@type": "SearchAction",
+                target: `${site.domain}/search?q={search_term_string}`,
+                "query-input": "required name=search_term_string",
+              },
+            },
+          ],
+        }}
+      />
+      <section className="home-hero">
+        <div className="gate-art" aria-hidden="true">
+          <span />
+          <span />
+          <span />
         </div>
-      </nav>
-
-      <section className="hero" id="top">
-        <div className="hero-orbit" aria-hidden="true">
-          <span className="orbit orbit-one" />
-          <span className="orbit orbit-two" />
-          <span className="star star-one">✦</span>
-          <span className="star star-two">✧</span>
+        <div className="hero-copy">
+          <p className="kicker">Author · Mystical Science · Living Library</p>
+          <HebrewName />
+          <h1>
+            Welcome to
+            <br />
+            the <em>Gate.</em>
+          </h1>
+          <p>
+            Kiah Aviyu writes connected works of story, Hebrew symbolism,
+            metaphysical inquiry, and speculative imagination—a living literary
+            library of books, gates, trees, and light.
+          </p>
+          <div className="button-row">
+            <Link className="button gold" href="/books">
+              Explore the Books
+            </Link>
+            <Link className="button ghost" href="/231-gates">
+              Enter the Living Library
+            </Link>
+          </div>
+          <p className="torah">
+            <HebrewName /> • Torah First
+          </p>
         </div>
-        <p className="eyebrow">Author · Seeker · Storyteller</p>
-        <h1>
-          Words for the
-          <br />
-          <em>inner ascent.</em>
-        </h1>
-        <p className="hero-copy">
-          Enter the visionary worlds of <em>Merkavat Ha’El</em> and <em>Tower of
-          Da’at</em>—the defining works of Kiah Aviyu.
-        </p>
-        <div className="hero-actions">
-          <a className="button button-light" href="#books">Explore the books <span>↓</span></a>
-          <a className="text-link" href="#about">Meet Kiah <span>→</span></a>
+        <div className="hero-side">
+          <span>א</span>
+          <p>
+            Books • Gates
+            <br />
+            Trees • Light
+          </p>
         </div>
-        <p className="scroll-note">Scroll to enter <span>⌄</span></p>
       </section>
 
-      <section className="manifesto">
-        <p className="section-number">01 / The work</p>
-        <blockquote>
-          “Some truths are not found.
-          <br />
-          They are <em>climbed.</em>”
-        </blockquote>
-        <p className="manifesto-copy">
-          Kiah Aviyu writes at the meeting place of spiritual tradition and the
-          lived human struggle—where questions become doorways and every trial
-          carries an invitation.
-        </p>
+      <section className="featured-section section-pad">
+        <div className="section-label">01 · Featured book</div>
+        <div className="featured-grid">
+          <BookCover book={featured} />
+          <div>
+            <p className="kicker">At the center of the library</p>
+            <h2>{featured.title}</h2>
+            <h3>{featured.subtitle}</h3>
+            <p>{featured.long}</p>
+            <div className="button-row">
+              <Link className="button dark" href={`/books/${featured.slug}`}>
+                Enter the book
+              </Link>
+              {featured.retailer && (
+                <a
+                  className="arrow-link"
+                  href={featured.retailer}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Find on Amazon ↗
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section className="books" id="books">
+      <section className="journey section-pad">
         <div className="section-heading">
           <div>
-            <p className="section-number">02 / The books</p>
-            <h2>The essential works.</h2>
+            <p className="kicker">Begin your journey</p>
+            <h2>Three ways through the gate.</h2>
           </div>
-          <a className="text-link dark-link" href={amazonUrl} target="_blank" rel="noreferrer">
-            View all on Amazon <Arrow />
+          <p>
+            Each path enters the same connected library from a different
+            threshold.
+          </p>
+        </div>
+        <div className="journey-grid">
+          {[
+            [
+              "01",
+              "Fiction & Myth",
+              "Stories that carry symbolic worlds and speculative questions.",
+              "/books?category=Fiction+%26+Myth",
+            ],
+            [
+              "02",
+              "Mystical Nonfiction",
+              "Contemplative works concerned with language, trial, and meaning.",
+              "/books?category=Mystical+Nonfiction",
+            ],
+            [
+              "03",
+              "Series, Gates & Trees",
+              "Connected architectures that unfold across books and projects.",
+              "/series",
+            ],
+          ].map(([n, t, d, u]) => (
+            <Link className="journey-card" href={u} key={t}>
+              <span>{n}</span>
+              <h3>{t}</h3>
+              <p>{d}</p>
+              <b>Enter →</b>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="library-intro section-pad">
+        <div className="tree-motif" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+        <div>
+          <p className="kicker">The Living Library</p>
+          <h2>
+            The Celestial Library
+            <br />
+            of the <em>231 Gates</em>
+          </h2>
+          <p>
+            A connected body of books, gates, trees, reflections, and related
+            explorations. The architecture invites many entries without
+            insisting on a single path.
+          </p>
+          <p className="aleph-note">
+            At its veiled edge rests <strong>Aleph Olam</strong>—the hidden
+            twenty-third element, named but not unfolded.
+          </p>
+          <Link className="button gold" href="/231-gates">
+            Approach the gates
+          </Link>
+        </div>
+      </section>
+
+      <section className="catalog-preview section-pad">
+        <div className="section-heading">
+          <div>
+            <p className="kicker">Selected books</p>
+            <h2>A growing body of work.</h2>
+          </div>
+          <Link className="arrow-link" href="/books">
+            View the full catalog →
+          </Link>
+        </div>
+        <div className="book-grid">
+          {books.slice(0, 6).map((b) => (
+            <BookCard book={b} key={b.slug} />
+          ))}
+        </div>
+      </section>
+
+      <section className="lumina section-pad">
+        <div className="lumina-mark" aria-hidden="true">
+          ◇
+        </div>
+        <div>
+          <p className="kicker">Primary public-benefit mission</p>
+          <h2>LuminaNexus</h2>
+          <p>
+            LuminaNexus.org is the educational, curriculum, research, outreach,
+            and public-benefit mission connected to this body of work—a separate
+            home for learning and public engagement.
+          </p>
+          <a
+            className="button gold"
+            href="https://luminaNexus.org"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Visit LuminaNexus.org ↗
           </a>
         </div>
-
-        <article className="book-row flagship">
-          <div className="book-art prayer-cover merkavat-cover" aria-label="Stylized cover for Merkavat Ha’El">
-            <span className="prayer-ring" />
-            <p>MERKAVAT<br /><strong>HA’EL</strong></p>
-            <div className="cover-rule" />
-            <small>THE CHARIOT<br />OF THE DIVINE</small>
-            <b>KIAH AVIYU</b>
-          </div>
-          <div className="book-info">
-            <p className="book-index">THE BEST OF KIAH AVIYU · FEATURED</p>
-            <h3>Merkavat Ha’El</h3>
-            <p className="book-theme">The Chariot of the Divine.</p>
-            <p className="book-meta">A flagship work by Kiah Aviyu</p>
-            <a className="button button-dark" href={merkavatUrl} target="_blank" rel="noreferrer">
-              Find on Amazon <Arrow />
-            </a>
-          </div>
-        </article>
-
-        <article className="book-row reverse flagship">
-          <div className="book-art tower-cover" aria-label="Stylized cover for Tower of Da’at">
-            <div className="cover-sun" />
-            <p>TOWER<br />OF<br /><strong>DA’AT</strong></p>
-            <small>KIAH AVIYU</small>
-          </div>
-          <div className="book-info">
-            <p className="book-index">THE BEST OF KIAH AVIYU · FEATURED</p>
-            <h3>Tower of Da’at</h3>
-            <p className="book-theme">A meditation on knowledge, wisdom, and the climb toward understanding.</p>
-            <p className="book-meta">Paperback · ISBN 978-1-969659-10-2</p>
-            <a className="button button-dark" href={towerUrl} target="_blank" rel="noreferrer">
-              Find on Amazon <Arrow />
-            </a>
-          </div>
-        </article>
       </section>
 
-      <section className="about" id="about">
-        <p className="section-number">03 / The author</p>
-        <div className="about-grid">
-          <h2>Kiah<br /><em>Aviyu</em></h2>
-          <div className="about-copy">
-            <p className="lead">A pen name. A body of work. A lifelong pursuit of the questions beneath the questions.</p>
-            <p>Kiah Aviyu writes for readers drawn to spiritual depth, honest inquiry, and the transformation hidden inside life’s most difficult encounters.</p>
-            <a className="button button-light" href={amazonUrl} target="_blank" rel="noreferrer">
-              Discover the books <Arrow />
-            </a>
+      <section className="worlds section-pad">
+        <div className="section-heading">
+          <div>
+            <p className="kicker">Connected worlds</p>
+            <h2>Separate doors. Shared light.</h2>
           </div>
+          <p>
+            KiahAviyu.com remains the calm author gate. These related projects
+            have their own purposes and paths.
+          </p>
+        </div>
+        <div className="project-grid">
+          {projects.map((p) => (
+            <a href={p.url} target="_blank" rel="noreferrer" key={p.title}>
+              <span aria-hidden="true">◇</span>
+              <h3>{p.title}</h3>
+              <p>{p.short}</p>
+              <b>Visit project ↗</b>
+            </a>
+          ))}
         </div>
       </section>
 
-      <footer>
-        <div className="footer-mark">KIAH <span>AVIYU</span></div>
-        <div className="footer-bottom">
-          <p>Spiritual writing for the inner ascent.</p>
-          <p>© {new Date().getFullYear()} Kiah Aviyu</p>
-          <a href={amazonUrl} target="_blank" rel="noreferrer">Amazon <Arrow /></a>
-        </div>
-      </footer>
-    </main>
+      <section className="latest section-pad">
+        <p className="kicker">Latest news</p>
+        <article>
+          <time dateTime={news[0].date}>
+            {new Date(`${news[0].date}T12:00:00`).toLocaleDateString("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            })}
+          </time>
+          <h2>{news[0].title}</h2>
+          <p>{news[0].excerpt}</p>
+          <Link className="arrow-link" href={`/news/${news[0].slug}`}>
+            Read the update →
+          </Link>
+        </article>
+      </section>
+      <Newsletter />
+    </Shell>
   );
 }

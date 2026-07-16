@@ -1,20 +1,39 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { site } from "../lib/content";
 
 export const metadata: Metadata = {
-  title: "Kiah Aviyu — Author",
-  description: "Discover Merkavat Ha’El and Tower of Da’at—the essential works of Kiah Aviyu.",
-  metadataBase: new URL("https://kiahaviyu.com"),
-  openGraph: {
-    title: "Kiah Aviyu — Words for the inner ascent",
-    description: "Featuring Merkavat Ha’El and Tower of Da’at—the essential works of Kiah Aviyu.",
-    url: "https://kiahaviyu.com",
-    siteName: "Kiah Aviyu",
-    type: "website",
+  metadataBase: new URL(site.domain),
+  title: {
+    default: "Kiah Aviyu — Living Library",
+    template: "%s | Kiah Aviyu",
   },
-  twitter: { card: "summary_large_image", title: "Kiah Aviyu — Author", description: "Words for the inner ascent." },
+  description:
+    "The author home and Living Library of Kiah Aviyu — books, gates, trees, light, and connected literary worlds.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: site.domain,
+    siteName: site.name,
+    title: "Kiah Aviyu — Welcome to the Gate",
+    description: "Books, gates, trees, light, and connected literary worlds.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kiah Aviyu — Welcome to the Gate",
+    description: "Author · Mystical Science · Living Library",
+  },
+  robots: { index: true, follow: true },
+  icons: { icon: "/favicon.svg" },
 };
-
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body>{children}</body></html>;
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
 }
