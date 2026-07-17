@@ -148,6 +148,86 @@ summary:focus-visible {
 main {
   min-height: 60vh;
 }
+.landing-gate {
+  position: relative;
+  min-height: calc(100svh - 84px);
+  overflow: hidden;
+  background: #050b11;
+  display: grid;
+  place-items: end center;
+}
+.landing-gate-artwork {
+  object-fit: cover;
+  object-position: center;
+}
+.landing-gate-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, #02070c24 0 60%, #02070c8f 100%),
+    radial-gradient(ellipse at center, transparent 45%, #02070c75 100%);
+  pointer-events: none;
+}
+.enter-gate {
+  position: relative;
+  z-index: 2;
+  margin-bottom: clamp(30px, 5vh, 64px);
+  min-width: min(310px, calc(100vw - 48px));
+  padding: 17px 44px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: #fff6da;
+  border: 1px solid #ffd98a9c;
+  background: linear-gradient(135deg, #07131fbd, #3e1b0aa6);
+  box-shadow:
+    0 18px 55px #000b,
+    inset 0 0 30px #e98b2822,
+    0 0 28px #e9822430;
+  backdrop-filter: blur(7px);
+  font: 400 25px/1.15 var(--serif);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+.enter-gate:before,
+.enter-gate:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ffd98a);
+}
+.enter-gate:before {
+  left: 12px;
+}
+.enter-gate:after {
+  right: 12px;
+  transform: rotate(180deg);
+}
+.enter-gate i {
+  font: normal 15px/1 var(--sans);
+  color: var(--gold);
+  animation: enter-pulse 1.8s ease-in-out infinite;
+}
+.enter-gate:hover {
+  transform: translateY(-4px);
+  border-color: #ffe4a8;
+  box-shadow:
+    0 22px 65px #000c,
+    inset 0 0 38px #e98b2833,
+    0 0 40px #f39b343f;
+}
+@keyframes enter-pulse {
+  50% {
+    transform: translateY(4px);
+  }
+}
 .home-hero {
   min-height: calc(100svh - 84px);
   background:
@@ -1260,6 +1340,17 @@ footer {
     padding: 84px 24px 110px;
     min-height: calc(100svh - 72px);
     gap: 84px;
+  }
+  .landing-gate {
+    min-height: calc(100svh - 72px);
+  }
+  .landing-gate-artwork {
+    object-position: center;
+  }
+  .enter-gate {
+    margin-bottom: 28px;
+    padding-inline: 36px;
+    font-size: 21px;
   }
   .home-hero h1 {
     font-size: 64px;

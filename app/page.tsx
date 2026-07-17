@@ -65,7 +65,22 @@ export default function Home() {
           ],
         }}
       />
-      <section className="home-hero">
+      <section className="landing-gate" aria-label="Welcome to Kiah Aviyu">
+        <Image
+          className="landing-gate-artwork"
+          src="/brand/fiery-gate-landing.png"
+          alt="A luminous golden gateway surrounded by fire, stars, and sacred geometry"
+          fill
+          priority
+          sizes="100vw"
+        />
+        <div className="landing-gate-vignette" aria-hidden="true" />
+        <Link className="enter-gate" href="#welcome">
+          <span>Enter the Gate</span>
+          <i aria-hidden="true">↓</i>
+        </Link>
+      </section>
+      <section className="home-hero" id="welcome">
         <div className="ember-field" aria-hidden="true" />
         <div className="hero-copy">
           <p className="kicker">Author · Mystical Fiction · Living Library</p>
