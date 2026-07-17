@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import {
   BookCard,
   BookCover,
@@ -12,6 +13,30 @@ import { books, news, projects, site } from "../lib/content";
 
 export default function Home() {
   const featured = books[0];
+  const fireLetters = [
+    "א",
+    "ב",
+    "ג",
+    "ד",
+    "ה",
+    "ו",
+    "ז",
+    "ח",
+    "ט",
+    "י",
+    "כ",
+    "ל",
+    "מ",
+    "נ",
+    "ס",
+    "ע",
+    "פ",
+    "צ",
+    "ק",
+    "ר",
+    "ש",
+    "ת",
+  ];
   return (
     <Shell>
       <StructuredData
@@ -41,22 +66,9 @@ export default function Home() {
         }}
       />
       <section className="home-hero">
-        <Image
-          className="hero-artwork"
-          src="/brand/living-gate-hero.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          aria-hidden="true"
-        />
-        <div className="gate-art" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
+        <div className="ember-field" aria-hidden="true" />
         <div className="hero-copy">
-          <p className="kicker">Author · Mystical Science · Living Library</p>
+          <p className="kicker">Author · Mystical Fiction · Living Library</p>
           <HebrewName />
           <h1>
             Welcome to
@@ -80,13 +92,22 @@ export default function Home() {
             <HebrewName /> • Torah First
           </p>
         </div>
-        <div className="hero-side">
-          <span>א</span>
-          <p>
-            Books • Gates
-            <br />
-            Trees • Light
-          </p>
+        <div className="fire-letter-stage" aria-hidden="true">
+          <div className="letter-orbit" lang="he" dir="rtl">
+            {fireLetters.map((letter, index) => (
+              <span
+                key={letter}
+                style={{ "--letter-index": index } as CSSProperties}
+              >
+                {letter}
+              </span>
+            ))}
+          </div>
+          <div className="fire-aleph" lang="he" dir="rtl">
+            א
+          </div>
+          <div className="ember-core" />
+          <p>Books • Gates • Trees • Light</p>
         </div>
       </section>
 

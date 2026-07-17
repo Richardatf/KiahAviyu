@@ -151,8 +151,9 @@ main {
 .home-hero {
   min-height: calc(100svh - 84px);
   background:
-    radial-gradient(circle at 77% 38%, #1e3542 0, transparent 34%),
-    linear-gradient(115deg, #06101a, #0c1e2b 68%, #111d20);
+    radial-gradient(circle at 76% 52%, #9f321233 0 8%, transparent 34%),
+    radial-gradient(circle at 74% 46%, #cfaa6414 0 15%, transparent 42%),
+    linear-gradient(118deg, #030a10, #081722 60%, #120b09);
   color: var(--ivory);
   display: grid;
   grid-template-columns: 1.25fr 0.75fr;
@@ -164,17 +165,15 @@ main {
   content: "";
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(
-    115deg,
-    transparent 0 28px,
-    #ffffff05 29px 30px
-  );
-  opacity: 0.4;
-}
-.hero-artwork {
-  object-fit: cover;
-  object-position: center;
-  opacity: 0.78;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 49.92%,
+      #cfaa6415 50%,
+      transparent 50.08%
+    ),
+    repeating-linear-gradient(115deg, transparent 0 28px, #ffffff04 29px 30px);
+  opacity: 0.65;
 }
 .home-hero:before {
   content: "";
@@ -183,13 +182,13 @@ main {
   z-index: 1;
   background: linear-gradient(
     90deg,
-    #06101af5 0%,
-    #07131fd9 42%,
-    #07131f26 78%
+    #030b12f7 0%,
+    #06131edb 44%,
+    transparent 74%
   );
 }
 .hero-copy,
-.hero-side {
+.fire-letter-stage {
   position: relative;
   z-index: 2;
 }
@@ -260,44 +259,138 @@ main {
   font-size: 12px;
   color: #ffffff77;
 }
-.hero-side {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  flex-direction: column;
-  text-align: right;
+.fire-letter-stage {
+  align-self: center;
+  justify-self: center;
+  width: min(43vw, 660px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
 }
-.hero-side > span {
-  font: 400 clamp(180px, 30vw, 480px)/0.7 var(--hebrew);
-  color: #d5bd7e0c;
-  text-shadow: 0 0 1px #d5bd7e44;
+.fire-letter-stage:before,
+.fire-letter-stage:after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
 }
-.hero-side p {
-  color: #ffffff66;
+.fire-letter-stage:before {
+  inset: 5%;
+  border: 1px solid #e5b96f4f;
+  box-shadow:
+    inset 0 0 70px #c8501822,
+    0 0 90px #e39a3820;
+}
+.fire-letter-stage:after {
+  inset: 18%;
+  border: 1px solid #f8d58a36;
+}
+.letter-orbit {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  animation: orbit-breathe 9s ease-in-out infinite;
+}
+.letter-orbit span {
+  --angle: calc(var(--letter-index) * 16.3636deg);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font: 500 clamp(19px, 2vw, 34px)/1 var(--hebrew);
+  color: #ffe4a1;
+  transform: translate(-50%, -50%) rotate(var(--angle))
+    translateY(max(-20.5vw, -310px)) rotate(calc(var(--angle) * -1));
+  text-shadow:
+    0 -2px 5px #fff1b0,
+    0 0 13px #ff9a28,
+    0 0 28px #d74416;
+  animation: letter-flame 2.8s ease-in-out infinite alternate;
+  animation-delay: calc(var(--letter-index) * -120ms);
+}
+.fire-aleph {
+  position: relative;
+  z-index: 2;
+  font: 500 clamp(160px, 23vw, 350px)/0.75 var(--hebrew);
+  color: #fff4c9;
+  transform: translateY(-2%);
+  text-shadow:
+    0 -5px 8px #fff7d6,
+    0 0 16px #ffc65c,
+    0 10px 36px #f35b20,
+    0 25px 80px #8b1f0c;
+  animation: aleph-flame 4s ease-in-out infinite alternate;
+}
+.ember-core {
+  position: absolute;
+  width: 35%;
+  height: 35%;
+  z-index: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    #ffd98c66,
+    #ef5b1f22 42%,
+    transparent 72%
+  );
+  filter: blur(8px);
+}
+.fire-letter-stage p {
+  position: absolute;
+  bottom: -1.5rem;
+  margin: 0;
+  color: #e7c783a8;
   text-transform: uppercase;
   font-size: 10px;
   letter-spacing: 0.28em;
 }
-.gate-art {
+.ember-field {
   position: absolute;
-  right: 6%;
-  top: 8%;
-  width: 38vw;
+  right: 4%;
+  top: 12%;
+  width: 44vw;
   height: 76%;
   z-index: 1;
+  opacity: 0.9;
+  background-image:
+    radial-gradient(circle, #ffd383 0 1px, transparent 2px),
+    radial-gradient(circle, #ed6b2c 0 1px, transparent 2px);
+  background-size:
+    83px 97px,
+    127px 149px;
+  background-position:
+    7px 11px,
+    43px 61px;
+  mask-image: radial-gradient(ellipse, black, transparent 72%);
+  animation: ember-drift 11s linear infinite alternate;
 }
-.gate-art span {
-  position: absolute;
-  inset: 0;
-  border: 1px solid #cfaa6428;
-  border-bottom: 0;
-  border-radius: 50% 50% 0 0;
+@keyframes letter-flame {
+  from {
+    opacity: 0.7;
+    filter: blur(0);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0.35px);
+  }
 }
-.gate-art span:nth-child(2) {
-  inset: 10%;
+@keyframes aleph-flame {
+  from {
+    transform: translateY(-2%) scale(0.98);
+  }
+  to {
+    transform: translateY(-3%) scale(1.015);
+  }
 }
-.gate-art span:nth-child(3) {
-  inset: 20%;
+@keyframes orbit-breathe {
+  50% {
+    transform: scale(1.025);
+  }
+}
+@keyframes ember-drift {
+  to {
+    transform: translateY(-22px);
+  }
 }
 .section-pad {
   padding: 120px max(5vw, 24px);
@@ -1120,9 +1213,15 @@ footer {
   }
   .home-hero {
     grid-template-columns: 1fr;
+    gap: 90px;
   }
-  .hero-side {
-    display: none;
+  .fire-letter-stage {
+    width: min(72vw, 600px);
+    justify-self: end;
+  }
+  .letter-orbit span {
+    transform: translate(-50%, -50%) rotate(var(--angle))
+      translateY(max(-34vw, -280px)) rotate(calc(var(--angle) * -1));
   }
   .journey-grid,
   .book-grid {
@@ -1158,14 +1257,29 @@ footer {
     top: 72px;
   }
   .home-hero {
-    padding: 100px 24px;
+    padding: 84px 24px 110px;
     min-height: calc(100svh - 72px);
+    gap: 84px;
   }
   .home-hero h1 {
     font-size: 64px;
   }
   .hero-copy > p:not(.kicker, .torah) {
     font-size: 16px;
+  }
+  .fire-letter-stage {
+    width: min(82vw, 380px);
+    justify-self: center;
+  }
+  .letter-orbit span {
+    font-size: clamp(17px, 5.5vw, 25px);
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-38vw)
+      rotate(calc(var(--angle) * -1));
+  }
+  .fire-letter-stage p {
+    width: 100%;
+    text-align: center;
+    letter-spacing: 0.18em;
   }
   .section-pad {
     padding: 80px 24px;
