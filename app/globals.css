@@ -1099,6 +1099,91 @@ main {
 .gate-map {
   background: #f2ecdf;
 }
+.gate-compartments {
+  max-width: 1450px;
+  margin: 65px auto 0;
+  border-top: 1px solid var(--line);
+}
+.gate-compartment {
+  border-bottom: 1px solid var(--line);
+}
+.gate-compartment summary {
+  min-height: 112px;
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 48px 68px minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: center;
+  cursor: pointer;
+  list-style: none;
+  transition: background 180ms ease;
+}
+.gate-compartment summary::-webkit-details-marker {
+  display: none;
+}
+.gate-compartment summary:hover,
+.gate-compartment[open] > summary {
+  background: #e8deca;
+}
+.gate-compartment .volume-number {
+  color: var(--bronze);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+.gate-compartment summary > .hebrew {
+  color: var(--midnight);
+  font-size: 42px;
+  line-height: 1;
+}
+.gate-compartment summary > span:nth-child(3) {
+  display: flex;
+  flex-direction: column;
+}
+.gate-compartment summary b {
+  font: 400 27px/1.1 var(--serif);
+}
+.gate-compartment summary small {
+  margin-top: 4px;
+  color: #5e676b;
+  font-size: 13px;
+}
+.gate-compartment summary em {
+  color: var(--bronze);
+  font-size: 10px;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.gate-compartment .reserved-gate-grid {
+  margin: 0;
+  padding: 24px;
+  border-top: 1px solid var(--line);
+  background: #e8deca75;
+}
+.compartment-note {
+  margin: 0;
+  padding: 28px 24px 34px 160px;
+  border-top: 1px solid var(--line);
+  color: #4f595d;
+}
+.hidden-register {
+  margin-top: 28px;
+  border: 1px solid #9c784066;
+  background: var(--midnight);
+  color: var(--ivory);
+}
+.hidden-register summary:hover,
+.hidden-register[open] > summary {
+  background: #142532;
+}
+.hidden-register summary > .hebrew,
+.hidden-register summary small {
+  color: var(--gold);
+}
+.hidden-register .compartment-note {
+  border-color: #cfaa6430;
+  color: #f8f5ecaa;
+}
 .reserved-gate-grid {
   max-width: 1450px;
   margin: 65px auto 0;
@@ -1418,6 +1503,26 @@ footer {
   .site-header nav,
   .header-actions {
     display: none;
+  }
+  .gate-compartment summary {
+    grid-template-columns: 34px 46px minmax(0, 1fr);
+    gap: 12px;
+    padding-inline: 14px;
+  }
+  .gate-compartment summary > .hebrew {
+    font-size: 34px;
+  }
+  .gate-compartment summary b {
+    font-size: 23px;
+  }
+  .gate-compartment summary em {
+    grid-column: 3;
+  }
+  .gate-compartment .reserved-gate-grid {
+    padding: 14px;
+  }
+  .compartment-note {
+    padding: 24px 18px;
   }
   .mobile-menu {
     display: block;

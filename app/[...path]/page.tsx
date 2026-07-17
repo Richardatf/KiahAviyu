@@ -25,7 +25,7 @@ import {
   series,
   site,
 } from "../../lib/content";
-import { gates } from "../../lib/gates";
+import { gates, hebrewLetters } from "../../lib/gates";
 
 type Props = {
   params: Promise<{ path: string[] }>;
@@ -333,52 +333,93 @@ export default async function RoutePage({ params, searchParams }: Props) {
         <section className="gate-map section-pad" id="gate-map">
           <div className="section-heading">
             <div>
-              <p className="kicker">The mapped architecture</p>
-              <h2>231 reserved Gates.</h2>
+              <p className="kicker">The Twenty-Three Volumes</p>
+              <h2>The Gates, gathered by letter.</h2>
             </div>
             <p>
-              Every distinct pair has a place. Each entry identifies its
-              position without supplying unwritten interpretation or text.
+              Each unique pairing appears once, within the volume of its first
+              letter in canonical order. Tav completes the visible sequence;
+              Aleph Olam remains beyond the count.
             </p>
           </div>
-          <div className="reserved-gate-grid">
-            {gates.map((gate) => (
-              <article className="reserved-gate-card" key={gate.slug}>
-                <div>
-                  <span>Gate {String(gate.number).padStart(3, "0")}</span>
-                  <b>{gate.status}</b>
-                </div>
-                <p className="hebrew" lang="he" dir="rtl">
-                  {gate.hebrew}
-                </p>
-                <h3>{gate.title}</h3>
-                <small>
-                  This position is mapped. Its text has not yet been opened.
-                </small>
-              </article>
-            ))}
+          <div className="gate-compartments">
+            {hebrewLetters.map((letter, volumeIndex) => {
+              const volume = celestialLibraryVolumes[volumeIndex];
+              const volumeGates = gates.filter(
+                (gate) => gate.firstLetter.slug === letter.slug,
+              );
+              return (
+                <details
+                  className="gate-compartment"
+                  key={letter.slug}
+                  open={volumeIndex === 0}
+                >
+                  <summary>
+                    <span className="volume-number">
+                      {String(volumeIndex + 1).padStart(2, "0")}
+                    </span>
+                    <span className="hebrew" lang="he" dir="rtl">
+                      {letter.character}
+                    </span>
+                    <span>
+                      <b>{volume.letter}</b>
+                      <small>{volume.title}</small>
+                    </span>
+                    <em>
+                      {volumeGates.length
+                        ? `${volumeGates.length} Gates`
+                        : "Completing Volume"}
+                    </em>
+                  </summary>
+                  {volumeGates.length ? (
+                    <div className="reserved-gate-grid">
+                      {volumeGates.map((gate) => (
+                        <article className="reserved-gate-card" key={gate.slug}>
+                          <div>
+                            <span>
+                              Gate {String(gate.number).padStart(3, "0")}
+                            </span>
+                            <b>{gate.status}</b>
+                          </div>
+                          <p className="hebrew" lang="he" dir="rtl">
+                            {gate.hebrew}
+                          </p>
+                          <h3>{gate.title}</h3>
+                          <small>
+                            This position is mapped. Its text has not yet been
+                            opened.
+                          </small>
+                        </article>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="compartment-note">
+                      Tav closes the ordered alphabet. Its relationships are
+                      already housed in the twenty-one preceding volumes, so no
+                      pairing is repeated here.
+                    </p>
+                  )}
+                </details>
+              );
+            })}
+            <details className="gate-compartment hidden-register">
+              <summary>
+                <span className="volume-number">23</span>
+                <span className="hebrew" lang="he" dir="rtl">
+                  א
+                </span>
+                <span>
+                  <b>{celestialLibraryVolumes[22].letter}</b>
+                  <small>{celestialLibraryVolumes[22].title}</small>
+                </span>
+                <em>Beyond the 231</em>
+              </summary>
+              <p className="compartment-note">
+                Aleph Olam is the hidden register, not another Hebrew letter and
+                not a category within the 231 pairings.
+              </p>
+            </details>
           </div>
-        </section>
-        <section className="volume-library section-pad">
-          <div className="section-heading">
-            <div>
-              <p className="kicker">The Celestial Library</p>
-              <h2>The Twenty-Three Volumes</h2>
-            </div>
-            <p>
-              The named volumes establish the library’s order while the 231
-              Gates remain unfilled.
-            </p>
-          </div>
-          <ol className="volume-grid">
-            {celestialLibraryVolumes.map((volume, index) => (
-              <li key={volume.letter}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <p>{volume.letter}</p>
-                <h3>{volume.title}</h3>
-              </li>
-            ))}
-          </ol>
         </section>
       </Shell>
     );

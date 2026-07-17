@@ -171,6 +171,13 @@ test("the reserved Gate map generates 231 unique non-reversed pairs", async () =
     [gate.firstLetter.slug, gate.secondLetter.slug].sort().join("-"),
   );
   assert.equal(new Set(normalized).size, 231);
+  assert.deepEqual(
+    hebrewLetters.map(
+      (letter) =>
+        gates.filter((gate) => gate.firstLetter.slug === letter.slug).length,
+    ),
+    Array.from({ length: 22 }, (_, index) => 21 - index),
+  );
 });
 
 test("the Celestial Library uses the author's approved framing", async () => {
