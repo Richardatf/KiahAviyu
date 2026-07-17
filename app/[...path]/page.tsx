@@ -24,6 +24,7 @@ import {
   series,
   site,
 } from "../../lib/content";
+import { gates } from "../../lib/gates";
 
 type Props = {
   params: Promise<{ path: string[] }>;
@@ -307,6 +308,38 @@ export default async function RoutePage({ params, searchParams }: Props) {
               twenty-third volume and hidden register. These are volume titles,
               not completed Gate entries.
             </p>
+            <a className="button dark" href="#gate-map">
+              View the reserved Gates
+            </a>
+          </div>
+        </section>
+        <section className="gate-map section-pad" id="gate-map">
+          <div className="section-heading">
+            <div>
+              <p className="kicker">The mapped architecture</p>
+              <h2>231 reserved Gates.</h2>
+            </div>
+            <p>
+              Every distinct pair has a place. Each entry identifies its
+              position without supplying unwritten interpretation or text.
+            </p>
+          </div>
+          <div className="reserved-gate-grid">
+            {gates.map((gate) => (
+              <article className="reserved-gate-card" key={gate.slug}>
+                <div>
+                  <span>Gate {String(gate.number).padStart(3, "0")}</span>
+                  <b>{gate.status}</b>
+                </div>
+                <p className="hebrew" lang="he" dir="rtl">
+                  {gate.hebrew}
+                </p>
+                <h3>{gate.title}</h3>
+                <small>
+                  This position is mapped. Its text has not yet been opened.
+                </small>
+              </article>
+            ))}
           </div>
         </section>
         <section className="volume-library section-pad">

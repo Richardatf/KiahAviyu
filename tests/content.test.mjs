@@ -158,3 +158,17 @@ test("the Celestial Library keeps Adam Kadmon separate and names 23 volumes", as
   assert.match(content, /Aleph Olam.*The Hidden Register/);
   assert.match(page, /The Gates are empty—for now\./);
 });
+
+test("the reserved Gate map generates 231 unique non-reversed pairs", async () => {
+  const { gates, hebrewLetters } = await import("../lib/gates.ts");
+  assert.equal(hebrewLetters.length, 22);
+  assert.equal(gates.length, 231);
+  assert.equal(new Set(gates.map((gate) => gate.slug)).size, 231);
+  assert.ok(
+    gates.every((gate) => gate.firstLetter.slug !== gate.secondLetter.slug),
+  );
+  const normalized = gates.map((gate) =>
+    [gate.firstLetter.slug, gate.secondLetter.slug].sort().join("-"),
+  );
+  assert.equal(new Set(normalized).size, 231);
+});
