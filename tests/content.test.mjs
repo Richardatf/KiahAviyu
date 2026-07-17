@@ -140,3 +140,21 @@ test("the catalog uses the author's mystical fiction taxonomy", async () => {
   assert.match(content, /title: "The Forgotten Star Saga"/);
   assert.match(content, /slug: "forgotten-star"/);
 });
+
+test("the Celestial Library keeps Adam Kadmon separate and names 23 volumes", async () => {
+  const [content, page] = await Promise.all([
+    read("lib/content.ts"),
+    read("app/[...path]/page.tsx"),
+  ]);
+  const adamKadmon = content.match(
+    /title: "ADAM KADMON",[\s\S]*?verification: verified\(true\),\n  },/,
+  )?.[0];
+  assert.ok(adamKadmon);
+  assert.doesNotMatch(adamKadmon, /series:/);
+  assert.equal(
+    [...content.matchAll(/\{ letter: ".+?", title: ".+?" \}/g)].length,
+    23,
+  );
+  assert.match(content, /Aleph Olam.*The Hidden Register/);
+  assert.match(page, /The Gates are empty—for now\./);
+});

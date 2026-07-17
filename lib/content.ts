@@ -91,7 +91,6 @@ export const books: Book[] = [
     title: "ADAM KADMON",
     subtitle: "A Story in Ten Lights",
     slug: "adam-kadmon",
-    series: "Celestial Library of the 231 Gates",
     category: "Mystical Fiction",
     publicationStatus: "published",
     status: "Available",
@@ -266,6 +265,32 @@ export const series = [
       "A mystical fiction series whose reading order and volume details will be added only when confirmed.",
   },
 ];
+
+export const celestialLibraryVolumes = [
+  { letter: "Aleph", title: "The Silence Before Light" },
+  { letter: "Bet", title: "The House at the Beginning" },
+  { letter: "Gimel", title: "The Road Between Worlds" },
+  { letter: "Dalet", title: "The Door of Dust and Fire" },
+  { letter: "He", title: "The Breath Within the Window" },
+  { letter: "Vav", title: "The Golden Thread" },
+  { letter: "Zayin", title: "The Edge of the Crown" },
+  { letter: "Chet", title: "The Chamber of Living Walls" },
+  { letter: "Tet", title: "The Hidden Good" },
+  { letter: "Yod", title: "The Seed of the Infinite" },
+  { letter: "Kaf", title: "The Open Hand" },
+  { letter: "Lamed", title: "The Tower of Learning" },
+  { letter: "Mem", title: "The Waters Beneath the Word" },
+  { letter: "Nun", title: "The Descent and the Rising" },
+  { letter: "Samekh", title: "The Circle That Holds" },
+  { letter: "Ayin", title: "The Eye Within the Gate" },
+  { letter: "Pe", title: "The Mouth of the Living Word" },
+  { letter: "Tsadi", title: "The Path of the Righteous" },
+  { letter: "Qof", title: "The Horizon Beyond Night" },
+  { letter: "Resh", title: "The Head of the Turning" },
+  { letter: "Shin", title: "The Fire That Speaks" },
+  { letter: "Tav", title: "The Final Mark" },
+  { letter: "Aleph Olam", title: "The Hidden Register" },
+] as const;
 
 export const projects = [
   {

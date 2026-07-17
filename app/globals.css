@@ -1046,6 +1046,47 @@ main {
   border: 1px solid var(--line);
   box-shadow: 0 30px 70px #07131f33;
 }
+.volume-library {
+  background: var(--midnight);
+  color: var(--ivory);
+}
+.volume-library .section-heading > p {
+  color: #f8f5ecaa;
+}
+.volume-grid {
+  max-width: 1450px;
+  margin: 65px auto 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid #cfaa6438;
+  border-left: 1px solid #cfaa6438;
+}
+.volume-grid li {
+  min-height: 210px;
+  padding: 30px;
+  border-right: 1px solid #cfaa6438;
+  border-bottom: 1px solid #cfaa6438;
+  background: linear-gradient(145deg, #ffffff05, transparent 70%);
+}
+.volume-grid li > span {
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+}
+.volume-grid li p {
+  margin: 30px 0 2px;
+  color: #d8c18f;
+  font: 500 14px var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.volume-grid li h3 {
+  margin: 0;
+  color: var(--ivory);
+  font: 400 28px/1.15 var(--serif);
+}
 .about-story {
   max-width: 1250px;
   margin: auto;
@@ -1299,7 +1340,8 @@ footer {
       translateY(max(-34vw, -280px)) rotate(calc(var(--angle) * -1));
   }
   .journey-grid,
-  .book-grid {
+  .book-grid,
+  .volume-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   .project-grid {
@@ -1395,6 +1437,7 @@ footer {
   }
   .journey-grid,
   .book-grid,
+  .volume-grid,
   .project-grid,
   .series-grid,
   .page-projects {

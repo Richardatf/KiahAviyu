@@ -16,6 +16,7 @@ import {
 } from "../../components/site";
 import {
   books,
+  celestialLibraryVolumes,
   findBook,
   findSeries,
   news,
@@ -282,7 +283,7 @@ export default async function RoutePage({ params, searchParams }: Props) {
         <PageHero
           kicker="The Living Library"
           title="The Celestial Library of the 231 Gates"
-          intro="A connected body of books, gates, trees, reflections, and related explorations—literary architecture, not a claim of established doctrine."
+          intro="Twenty-three volumes form the literary architecture around the Gates. The Gates themselves have not yet been opened with public text."
         />
         <section className="gates section-pad">
           <Image
@@ -294,21 +295,40 @@ export default async function RoutePage({ params, searchParams }: Props) {
             sizes="(max-width: 700px) 100vw, 55vw"
           />
           <div>
-            <h2>Twenty-two visible elements.</h2>
+            <h2>The Gates are empty—for now.</h2>
             <p>
-              The library uses the gate as an organizing metaphor: each book or
-              reflection may be entered independently, while resonances form
-              across the whole.
+              No individual Gate currently contains public text. Their places
+              remain deliberately open within the architecture until Kiah Aviyu
+              opens them.
             </p>
-            <h3>Aleph Olam</h3>
+            <h3>Twenty-two letters. One hidden register.</h3>
             <p>
-              The hidden twenty-third remains veiled—present at the edge of the
-              architecture, named without being over-explained.
+              The twenty-two lettered volumes lead to Aleph Olam, the
+              twenty-third volume and hidden register. These are volume titles,
+              not completed Gate entries.
             </p>
-            <Link className="button dark" href="/series/celestial-library">
-              View library entries
-            </Link>
           </div>
+        </section>
+        <section className="volume-library section-pad">
+          <div className="section-heading">
+            <div>
+              <p className="kicker">The Celestial Library</p>
+              <h2>The Twenty-Three Volumes</h2>
+            </div>
+            <p>
+              The named volumes establish the library’s order while the 231
+              Gates remain unfilled.
+            </p>
+          </div>
+          <ol className="volume-grid">
+            {celestialLibraryVolumes.map((volume, index) => (
+              <li key={volume.letter}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <p>{volume.letter}</p>
+                <h3>{volume.title}</h3>
+              </li>
+            ))}
+          </ol>
         </section>
       </Shell>
     );
