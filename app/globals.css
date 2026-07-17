@@ -230,30 +230,24 @@ main {
 }
 .home-hero {
   min-height: calc(100svh - 84px);
-  background:
-    radial-gradient(circle at 76% 52%, #9f321233 0 8%, transparent 34%),
-    radial-gradient(circle at 74% 46%, #cfaa6414 0 15%, transparent 42%),
-    linear-gradient(118deg, #030a10, #081722 60%, #120b09);
+  background: #050b11;
   color: var(--ivory);
   display: grid;
-  grid-template-columns: 1.25fr 0.75fr;
+  grid-template-columns: 1fr;
   position: relative;
   overflow: hidden;
-  padding: 8vw;
+  padding: clamp(70px, 8vw, 126px) max(5vw, 28px);
+}
+.home-hero-artwork {
+  object-fit: cover;
+  object-position: center;
 }
 .home-hero:after {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(
-      90deg,
-      transparent 49.92%,
-      #cfaa6415 50%,
-      transparent 50.08%
-    ),
-    repeating-linear-gradient(115deg, transparent 0 28px, #ffffff04 29px 30px);
-  opacity: 0.65;
+  z-index: 1;
+  background: linear-gradient(180deg, #02070c21 0 65%, #02070c66 100%);
 }
 .home-hero:before {
   content: "";
@@ -262,15 +256,17 @@ main {
   z-index: 1;
   background: linear-gradient(
     90deg,
-    #030b12f7 0%,
-    #06131edb 44%,
-    transparent 74%
+    #020810f7 0%,
+    #06111cde 32%,
+    #07131f99 48%,
+    transparent 70%
   );
 }
-.hero-copy,
-.fire-letter-stage {
+.hero-copy {
   position: relative;
   z-index: 2;
+  width: min(660px, 47vw);
+  align-self: center;
 }
 .kicker,
 .section-label,
@@ -291,7 +287,7 @@ main {
   margin: 22px 0;
 }
 .home-hero h1 {
-  font: 400 clamp(68px, 9vw, 146px)/0.83 var(--serif);
+  font: 400 clamp(68px, 7.5vw, 122px)/0.83 var(--serif);
   letter-spacing: -0.055em;
   margin: 0;
 }
@@ -1292,8 +1288,7 @@ footer {
     display: block;
   }
   .home-hero {
-    grid-template-columns: 1fr;
-    gap: 90px;
+    padding-right: 40vw;
   }
   .fire-letter-stage {
     width: min(72vw, 600px);
@@ -1337,20 +1332,23 @@ footer {
     top: 72px;
   }
   .home-hero {
-    padding: 84px 24px 110px;
-    min-height: calc(100svh - 72px);
-    gap: 84px;
-  }
-  .landing-gate {
+    padding: 72px 24px 76px;
     min-height: calc(100svh - 72px);
   }
-  .landing-gate-artwork {
-    object-position: center;
+  .home-hero-artwork {
+    object-position: 58% center;
   }
-  .enter-gate {
-    margin-bottom: 28px;
-    padding-inline: 36px;
-    font-size: 21px;
+  .home-hero:before {
+    background: linear-gradient(
+      180deg,
+      #020810e6 0%,
+      #06111cc7 52%,
+      #020810d9 100%
+    );
+  }
+  .hero-copy {
+    width: min(100%, 560px);
+    align-self: end;
   }
   .home-hero h1 {
     font-size: 64px;

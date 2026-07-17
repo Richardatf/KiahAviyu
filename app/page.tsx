@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import type { CSSProperties } from "react";
 import {
   BookCard,
   BookCover,
@@ -13,30 +12,6 @@ import { books, news, projects, site } from "../lib/content";
 
 export default function Home() {
   const featured = books[0];
-  const fireLetters = [
-    "א",
-    "ב",
-    "ג",
-    "ד",
-    "ה",
-    "ו",
-    "ז",
-    "ח",
-    "ט",
-    "י",
-    "כ",
-    "ל",
-    "מ",
-    "נ",
-    "ס",
-    "ע",
-    "פ",
-    "צ",
-    "ק",
-    "ר",
-    "ש",
-    "ת",
-  ];
   return (
     <Shell>
       <StructuredData
@@ -65,23 +40,16 @@ export default function Home() {
           ],
         }}
       />
-      <section className="landing-gate" aria-label="Welcome to Kiah Aviyu">
+      <section className="home-hero" aria-label="Welcome to Kiah Aviyu">
         <Image
-          className="landing-gate-artwork"
+          className="home-hero-artwork"
           src="/brand/fiery-gate-landing.png"
-          alt="A luminous golden gateway surrounded by fire, stars, and sacred geometry"
+          alt=""
           fill
           priority
           sizes="100vw"
+          aria-hidden="true"
         />
-        <div className="landing-gate-vignette" aria-hidden="true" />
-        <Link className="enter-gate" href="#welcome">
-          <span>Enter the Gate</span>
-          <i aria-hidden="true">↓</i>
-        </Link>
-      </section>
-      <section className="home-hero" id="welcome">
-        <div className="ember-field" aria-hidden="true" />
         <div className="hero-copy">
           <p className="kicker">Author · Mystical Fiction · Living Library</p>
           <HebrewName />
@@ -106,23 +74,6 @@ export default function Home() {
           <p className="torah">
             <HebrewName /> • Torah First
           </p>
-        </div>
-        <div className="fire-letter-stage" aria-hidden="true">
-          <div className="letter-orbit" lang="he" dir="rtl">
-            {fireLetters.map((letter, index) => (
-              <span
-                key={letter}
-                style={{ "--letter-index": index } as CSSProperties}
-              >
-                {letter}
-              </span>
-            ))}
-          </div>
-          <div className="fire-aleph" lang="he" dir="rtl">
-            א
-          </div>
-          <div className="ember-core" />
-          <p>Books • Gates • Trees • Light</p>
         </div>
       </section>
 
