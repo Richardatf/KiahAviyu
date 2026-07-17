@@ -172,3 +172,17 @@ test("the reserved Gate map generates 231 unique non-reversed pairs", async () =
   );
   assert.equal(new Set(normalized).size, 231);
 });
+
+test("the Celestial Library uses the author's approved framing", async () => {
+  const content = await read("lib/content.ts");
+  assert.match(
+    content,
+    /twenty-three-volume journey through the Hebrew alphabet/,
+  );
+  assert.match(
+    content,
+    /does not claim that its literary interpretations are established doctrine/,
+  );
+  assert.match(content, /Aleph Olam stands beyond the ordinary count/);
+  assert.match(content, /one letter and one threshold at a time/);
+});

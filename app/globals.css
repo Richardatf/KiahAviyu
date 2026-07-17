@@ -1040,6 +1040,52 @@ main {
   gap: 8vw;
   align-items: center;
 }
+.library-manifesto {
+  max-width: 1450px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+  gap: 9vw;
+  align-items: start;
+}
+.library-manifesto-heading {
+  position: sticky;
+  top: 40px;
+}
+.library-manifesto-heading h2 {
+  margin: 18px 0 0;
+  font: 400 clamp(48px, 5vw, 76px)/0.95 var(--serif);
+  letter-spacing: -0.04em;
+}
+.library-manifesto-copy > p {
+  color: #3e494d;
+  font-size: 17px;
+}
+.library-manifesto-copy .lead {
+  margin-top: 0;
+  color: var(--ink);
+  font: 400 27px/1.45 var(--serif);
+}
+.library-manifesto-copy blockquote {
+  margin: 42px 0;
+  padding: 28px 32px;
+  border-left: 2px solid var(--gold);
+  background: var(--parchment);
+  color: var(--ink);
+  font: italic 22px/1.5 var(--serif);
+}
+.library-manifesto-copy h3 {
+  margin: 18px 0 4px;
+  color: var(--bronze);
+  font: 400 32px/1.15 var(--serif);
+}
+.library-manifesto-copy .closing {
+  margin-top: 42px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  font: 400 22px/1.5 var(--serif);
+}
 .gates-artwork {
   width: 100%;
   height: auto;
@@ -1466,6 +1512,7 @@ footer {
   }
   .featured-grid,
   .library-intro,
+  .library-manifesto,
   .book-detail,
   .gates,
   .press-grid,
@@ -1473,6 +1520,9 @@ footer {
   .about-story,
   .author-mark {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .library-manifesto-heading {
+    position: static;
   }
   .featured-grid .book-cover,
   .book-detail .book-cover {

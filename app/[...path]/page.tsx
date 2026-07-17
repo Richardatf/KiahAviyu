@@ -16,6 +16,7 @@ import {
 } from "../../components/site";
 import {
   books,
+  celestialLibraryOverview,
   celestialLibraryVolumes,
   findBook,
   findSeries,
@@ -286,6 +287,22 @@ export default async function RoutePage({ params, searchParams }: Props) {
           title="The Celestial Library of the 231 Gates"
           intro="Twenty-three volumes form the literary architecture around the Gates. The Gates themselves have not yet been opened with public text."
         />
+        <section className="library-manifesto section-pad">
+          <div className="library-manifesto-heading">
+            <p className="kicker">A journey through letter and relationship</p>
+            <h2>The Celestial Library of the 231 Gates</h2>
+          </div>
+          <div className="library-manifesto-copy">
+            <p className="lead">{celestialLibraryOverview.opening}</p>
+            <p>{celestialLibraryOverview.primaryVolumes}</p>
+            <p>{celestialLibraryOverview.relationships}</p>
+            <blockquote>{celestialLibraryOverview.doctrine}</blockquote>
+            <p>{celestialLibraryOverview.veiledIntroduction}</p>
+            <h3>Aleph Olam — The Hidden Register</h3>
+            <p>{celestialLibraryOverview.alephOlam}</p>
+            <p className="closing">{celestialLibraryOverview.closing}</p>
+          </div>
+        </section>
         <section className="gates section-pad">
           <Image
             className="gates-artwork"

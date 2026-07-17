@@ -292,6 +292,23 @@ export const celestialLibraryVolumes = [
   { letter: "Aleph Olam", title: "The Hidden Register" },
 ] as const;
 
+export const celestialLibraryOverview = {
+  opening:
+    "The Celestial Library of the 231 Gates is a twenty-three-volume journey through the Hebrew alphabet, the relationships between its letters, and the hidden architecture formed when each letter is joined with every other.",
+  primaryVolumes:
+    "Across twenty-two primary volumes—from Aleph: The Silence Before Light to Tav: The Final Mark—each Hebrew letter becomes the root of a distinct literary and contemplative world. The series follows the full pattern of the 231 unique letter pairings, approaching each gate as a threshold of language, symbolism, story, memory, creation, and return.",
+  relationships:
+    "Drawing upon the imagery of Torah, Hebrew tradition, mystical reflection, speculative philosophy, and the evolving architecture of the Quantum Etz Chaim, these books explore the letters not as isolated signs, but as living relationships. Each volume opens a new chamber of the greater library: houses and roads, doors and windows, waters and fires, descent and ascent, silence and speech.",
+  doctrine:
+    "The series does not claim that its literary interpretations are established doctrine. Rather, it offers a reverent imaginative framework in which ancient letters may be encountered anew—without severing them from their sacred origins.",
+  veiledIntroduction:
+    "After the twenty-two visible volumes comes a final, veiled book:",
+  alephOlam:
+    "Aleph Olam stands beyond the ordinary count, not as another Hebrew letter, but as the concealed principle through which the completed pattern may be contemplated.",
+  closing:
+    "Together, the twenty-three volumes form one connected work: a celestial library of books, gates, trees, paths, and light—designed to be entered slowly, one letter and one threshold at a time.",
+} as const;
+
 export const projects = [
   {
     title: "LuminaNexus",
